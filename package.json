@@ -1,0 +1,26 @@
+{
+  "name": "sergey",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dayjs": "^1.10.4",
+    "discord.js": "^12.5.3",
+    "dotenv": "^8.2.0",
+    "form-data": "^4.0.0",
+    "mysql": "^2.18.1",
+    "owoify-js": "^1.0.7",
+    "slugify": "^1.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "migrate": "node cli/migrate.js",
+    "make:command": "node cli/make.js command",
+    "make:function": "node cli/make.js function",
+    "make:middleware": "node cli/make.js middleware"
+  },
+  "author": "",
+  "license": "ISC"
+}
