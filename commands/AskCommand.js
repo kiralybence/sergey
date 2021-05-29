@@ -8,7 +8,7 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        const question = this.getParamString(msg)
+        const question = this.getParamString(msg).toLowerCase()
         let answer = []
 
         if (question.includes('hello')) {
