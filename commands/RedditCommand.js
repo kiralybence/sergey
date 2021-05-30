@@ -15,7 +15,7 @@ module.exports = class extends Command {
             return
         }
 
-        axios.get('https://www.reddit.com/r/' + this.getParamArray(msg)[0] + '/top.json', {
+        axios.get('https://www.reddit.com/r/' + this.getParamArray(msg)[0] + '/top.json?t=all', {
             params: {
                 limit: 1000,
             },
