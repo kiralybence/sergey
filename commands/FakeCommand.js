@@ -12,6 +12,12 @@ module.exports = class extends Command {
 
     async run(msg) {
         const userTag = this.getParamString(msg)
+
+        if (!userTag.startsWith('<@!')) {
+            msg.reply('The user isn\'t tagged. Tag the user with @ and try again.')
+            return
+        }
+
         const author_id = userTag
             .replace('<@!', '')
             .replace('>', '')
