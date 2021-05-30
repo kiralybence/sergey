@@ -3,12 +3,9 @@ const Command = require('./Command')
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'fetchall'
+            name: 'fetchall',
+            ownerOnly: true,
         })
-    }
-
-    shouldRun(msg) {
-        return super.shouldRun(msg) && msg.author.id === process.env.OWNER_DISCORD_USER_ID
     }
 
     async run(msg) {
