@@ -7,6 +7,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'mk',
+            description: 'Search on Mangakakalot.',
             paramsRequired: 1,
         })
     }

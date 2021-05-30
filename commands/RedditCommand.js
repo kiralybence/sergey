@@ -6,6 +6,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'reddit',
+            description: 'Grab a random top post from a Reddit subreddit.',
             paramsRequired: 1,
         })
     }

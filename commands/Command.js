@@ -1,6 +1,7 @@
 module.exports = class {
     constructor(args) {
         this.name = args.name
+        this.description = args.description
         this.paramsRequired = args.paramsRequired || 0
         this.ownerOnly = args.ownerOnly
     }

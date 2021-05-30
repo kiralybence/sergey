@@ -4,6 +4,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'fake',
+            description: 'Imitate someone\'s writing style.',
             paramsRequired: 1,
         })
     }

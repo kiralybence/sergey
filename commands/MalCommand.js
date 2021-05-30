@@ -5,6 +5,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'mal',
+            description: 'Search on MyAnimeList.',
             paramsRequired: 1,
         })
     }

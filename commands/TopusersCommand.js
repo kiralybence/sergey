@@ -4,6 +4,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'topusers',
+            description: 'Check who used a certain word the most times.',
             paramsRequired: 1,
         })
     }

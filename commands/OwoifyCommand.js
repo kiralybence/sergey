@@ -5,6 +5,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'owoify',
+            description: 'Turn your message to "owo" style.',
             paramsRequired: 1,
         })
     }

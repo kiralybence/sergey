@@ -4,6 +4,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'fetchall',
+            description: 'Export and store all messages from the channel.',
             ownerOnly: true,
         })
     }

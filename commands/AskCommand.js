@@ -4,6 +4,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'ask',
+            description: 'Ask the bot a question.',
             paramsRequired: 1,
         })
     }

@@ -6,6 +6,7 @@ module.exports = class extends Command {
     constructor() {
         super({
             name: 'img',
+            description: 'Grab a random image from DuckDuckGo.',
             paramsRequired: 1,
         })
     }

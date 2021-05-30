@@ -3,7 +3,8 @@ const Command = require('./Command')
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'xword'
+            name: 'xword',
+            description: 'Get a random word starting with a certain letter.',
         })
     }
 
