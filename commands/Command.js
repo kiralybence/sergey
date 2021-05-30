@@ -5,7 +5,7 @@ module.exports = class {
     }
 
     shouldRun(msg) {
-        let nameMatches = msg.content.toLowerCase().includes('!' + this.name)
+        let nameMatches = msg.content.toLowerCase().startsWith('!' + this.name)
         let hasEnoughParams = this.paramsRequired <= this.getParamArray(msg).length
 
         return nameMatches && hasEnoughParams

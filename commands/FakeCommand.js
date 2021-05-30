@@ -23,9 +23,9 @@ module.exports = class extends Command {
                 let numOfTimesInArr = fakeText.filter(word => word === currentWord).length
 
                 const isEmpty = !currentWord
-                const isLink = currentWord.includes('http://') || currentWord.includes('https://')
-                const isTag = currentWord.includes('<@')
-                const isCommand = currentWord.includes('!')
+                const isLink = currentWord.startsWith('http://') || currentWord.startsWith('https://')
+                const isTag = currentWord.startsWith('<@')
+                const isCommand = currentWord.startsWith('!')
                 if (!(isEmpty || isLink || isTag || isCommand)) {
                     fakeText.push(currentWord)
                 }

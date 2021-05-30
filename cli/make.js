@@ -11,7 +11,7 @@ if (!name) {
 }
 
 function makeCommand(name) {
-    if (!name.includes('Command')) {
+    if (!name.endsWith('Command')) {
         throw 'Name must end with "Command".'
     }
 
