@@ -17,7 +17,7 @@ module.exports = class extends Command {
 
         axios.get('https://www.reddit.com/r/' + this.getParamArray(msg)[0] + '/top.json?t=all', {
             params: {
-                limit: 1000,
+                limit: 100,
             },
         }).then(resp => {
             const allowedTypes = ['jpg', 'png', 'webp', 'gif']
