@@ -1,7 +1,6 @@
 const Command = require('./Command')
 const axios = require('axios')
 const Discord = require('discord.js')
-const fs = require('fs')
 
 module.exports = class extends Command {
     constructor() {
@@ -27,22 +26,12 @@ module.exports = class extends Command {
                 images.push(result[1])
             }
 
-            let randomImg = randArr(images)
-
-            if (randomImg) {
-                axios.get(randomImg, {responseType: 'stream'})
-                    .then(resp => {
-                        resp.data.pipe(fs.createWriteStream('./temp.jpg'))
-                        msg.reply(new Discord.MessageAttachment('./temp.jpg'))
-                        // fs.unlinkSync('./temp.jpg')
-                    })
-                    .catch(err => {
-                        console.error(err)
-                        msg.reply('Hiba történt 😡')
-                    })
-            } else {
-                msg.reply('Nincs találat 😡')
+            if (images.length === 0) {
+                msg.reply('Nincs találat.')
+                return
             }
+
+            msg.reply(new Discord.MessageAttachment(randArr(images), 'image.jpg'))
         }).catch(err => {
             console.error(err)
             msg.reply('Hiba történt 😡')
