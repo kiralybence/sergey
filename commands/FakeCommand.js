@@ -3,7 +3,8 @@ const Command = require('./Command')
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'fake'
+            name: 'fake',
+            paramsRequired: 1,
         })
     }
 

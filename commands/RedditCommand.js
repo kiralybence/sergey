@@ -5,7 +5,8 @@ const axios = require('axios')
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'reddit'
+            name: 'reddit',
+            paramsRequired: 1,
         })
     }
 

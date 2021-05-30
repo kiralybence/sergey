@@ -5,7 +5,8 @@ const { image_search } = require('duckduckgo-images-api')
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'img'
+            name: 'img',
+            paramsRequired: 1,
         })
     }
 

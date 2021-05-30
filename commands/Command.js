@@ -1,10 +1,14 @@
 module.exports = class {
     constructor(args) {
         this.name = args.name
+        this.paramsRequired = args.paramsRequired || 0
     }
 
     shouldRun(msg) {
-        return msg.content.toLowerCase().includes('!' + this.name)
+        let nameMatches = msg.content.toLowerCase().includes('!' + this.name)
+        let hasEnoughParams = this.paramsRequired <= this.getParamArray(msg).length
+
+        return nameMatches && hasEnoughParams
     }
 
     getParamString(msg) {
@@ -12,7 +16,7 @@ module.exports = class {
     }
 
     getParamArray(msg) {
-        return this.getParamString(msg).split(' ')
+        return this.getParamString(msg).split(' ').filter(msg => msg !== '')
     }
 
     async run(msg) {

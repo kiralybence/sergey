@@ -4,7 +4,8 @@ const owoify = require('owoify-js').default
 module.exports = class extends Command {
     constructor() {
         super({
-            name: 'owoify'
+            name: 'owoify',
+            paramsRequired: 1,
         })
     }
 
