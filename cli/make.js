@@ -11,10 +11,6 @@ if (!name) {
 }
 
 function makeCommand(name) {
-    if (!name.endsWith('Command')) {
-        throw 'Name must end with "Command".'
-    }
-
     let dest = './commands/' + name + '.js'
 
     // Copy the file
@@ -24,11 +20,8 @@ function makeCommand(name) {
     fs.readFile(dest, 'utf8', (err, data) => {
         if (err) console.error(err)
 
-        // Command name
-        let command = name.replace('Command', '').toLowerCase()
-
         let replacedString = data
-            .replace(/examplecommandname/g, command) // replace command name
+            .replace(/example/g, name) // replace command name
 
         fs.writeFileSync(dest, replacedString)
     })

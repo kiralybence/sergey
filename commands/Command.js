@@ -8,7 +8,7 @@ module.exports = class {
     }
 
     shouldRun(msg) {
-        let nameMatches = msg.content.toLowerCase().startsWith('!' + this.name)
+        let nameMatches = msg.content.startsWith('!' + this.name)
         let permissionMatches = this.ownerOnly ? msg.author.id === process.env.OWNER_DISCORD_USER_ID : true
         let hasEnoughParams = this.paramsRequired <= this.getParamArray(msg).length
 
