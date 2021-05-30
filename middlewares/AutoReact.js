@@ -5,7 +5,10 @@ module.exports = class extends Middleware {
         const autoReactions = await queryPromise('SELECT * FROM auto_reactions')
 
         autoReactions.forEach(autoReaction => {
-            if (msg.content.toLowerCase().includes(autoReaction.keyword)) {
+            let normalizedMessage = removeAccents(msg.content).toLowerCase()
+            let normalizedKeyword = removeAccents(autoReaction.keyword).toLowerCase()
+
+            if (normalizedMessage.includes(normalizedKeyword)) {
                 msg.react(autoReaction.emote)
             }
         })
