@@ -7,7 +7,7 @@ const fs = require('fs')
 // Register functions globally
 fs.readdirSync(__dirname + '/functions').forEach(fn => require('./functions/' + fn)())
 
-const middlewares = registerMiddlewares()
+const middlewares = getMiddlewares()
 
 client.on('ready', () => {
     console.log(`Connected as ${client.user.tag}`)

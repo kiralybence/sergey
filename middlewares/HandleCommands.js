@@ -4,7 +4,7 @@ module.exports = class extends Middleware {
     constructor() {
         super()
 
-        this.commands = registerCommands()
+        this.commands = getCommands()
     }
 
     async run(msg) {

@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 module.exports = () => {
-    global.registerMiddlewares = () => {
+    global.getMiddlewares = () => {
         let middlewares = fs.readdirSync(__dirname + '/../middlewares')
 
         // Remove .js extension

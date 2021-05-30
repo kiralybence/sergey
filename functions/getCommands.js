@@ -1,7 +1,7 @@
 const fs = require('fs')
 
 module.exports = () => {
-    global.registerCommands = () => {
+    global.getCommands = () => {
         let commands = fs.readdirSync(__dirname + '/../commands')
 
         // Remove .js extension
