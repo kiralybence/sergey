@@ -41,7 +41,14 @@ module.exports = class extends Command {
             msg.reply(new Discord.MessageAttachment(randomPost.data.url, fileName))
         }).catch(err => {
             console.error(err)
-            msg.reply('Hiba történt 😡')
+
+            if (err.response.status === 403) {
+                msg.reply('Letiltott a reddit, mert túl sokat használtuk a commandot. Várj egy kicsit.')
+            } else if (err.response.status === 404) {
+                msg.reply('Nincs ilyen subreddit.')
+            } else {
+                msg.reply('Hiba történt 😡')
+            }
         })
     }
 }
