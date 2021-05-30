@@ -9,7 +9,7 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        const word = msg.content.substring(10)
+        const word = this.getParamString(msg)
         const wordCounts = await queryPromise('SELECT author_id, COUNT(*) as use_count FROM words WHERE word LIKE ? GROUP BY author_id ORDER BY use_count DESC', [
             '%'+word+'%',
         ]).then(results => {

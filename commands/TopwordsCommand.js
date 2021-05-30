@@ -9,7 +9,7 @@ module.exports = class extends Command {
     }
 
     async run(msg) {
-        const userTag = msg.content.substring(10)
+        const userTag = this.getParamString(msg)
         const author_id = userTag
             .replace('<@!', '')
             .replace('>', '')

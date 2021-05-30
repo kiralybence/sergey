@@ -21,7 +21,7 @@ module.exports = class extends Command {
             query = inputs.join(' ')
         } else {
             type = 'all'
-            query = msg.content.substring(12)
+            query = this.getParamString(msg)
         }
 
         axios.get('https://myanimelist.net/search/prefix.json', {
