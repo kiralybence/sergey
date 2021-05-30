@@ -20,7 +20,7 @@ module.exports = class extends Command {
         }).then(resp => {
             const html = resp.data
 
-            let regex = new RegExp('<img class="mimg" .*?src="(.*?)"', "gi")
+            let regex = new RegExp(/<img class="mimg" .*?src="(.*?)"/gi)
             let result
             let images = []
             while (result = regex.exec(html)) {

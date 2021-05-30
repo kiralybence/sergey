@@ -25,7 +25,7 @@ module.exports = class extends Command {
     }
 
     getValidLetter(msg) {
-        const regex = new RegExp('!(.*?)word', "gi")
+        const regex = new RegExp(/!(.*?)word/gi)
         const alphabet = [
             'a', 'á', 'b', 'c', 'cs', 'd', 'dz', 'dzs', 'e', 'é', 'f', 'g',
             'gy', 'h', 'i', 'í', 'j', 'k', 'l', 'ly', 'm', 'n', 'ny', 'o',
