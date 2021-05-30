@@ -31,9 +31,14 @@ module.exports = class extends Command {
                 return
             }
 
-            let randomImg = randArr(posts).data.url
+            let randomPost = randArr(posts)
+            let fileName = getFileNameFromUrl(randomPost.data.url)
 
-            msg.reply(new Discord.MessageAttachment(randomImg))
+            if (randomPost.data.over_18) {
+                fileName = 'SPOILER_' + fileName
+            }
+
+            msg.reply(new Discord.MessageAttachment(randomPost.data.url, fileName))
         }).catch(err => {
             console.error(err)
             msg.reply('Hiba történt 😡')
