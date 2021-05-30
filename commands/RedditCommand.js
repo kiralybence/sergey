@@ -20,14 +20,12 @@ module.exports = class extends Command {
                 limit: 1000,
             },
         }).then(resp => {
-            let posts = resp.data.data.children
-            let randomImg
-
-            // TODO: check if contains any of these, to avoid infinite loop
-
-            do {
-                randomImg = randArr(posts).data.url
-            } while (!(randomImg.endsWith('.jpg') || randomImg.endsWith('.png') || randomImg.endsWith('.webp')))
+            const allowedTypes = ['.jpg', '.png', '.webp', '.gif']
+            let posts = resp.data.data.children.filter(post => {
+                // Filter posts that contain media of allowed types
+                return allowedTypes.some(type => post.data.url.endsWith(type))
+            })
+            let randomImg = randArr(posts).data.url
 
             msg.reply(new Discord.MessageAttachment(randomImg))
         }).catch(err => {
