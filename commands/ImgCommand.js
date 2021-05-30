@@ -8,6 +8,7 @@ module.exports = class extends Command {
             name: 'img',
             description: 'Grab a random image from DuckDuckGo.',
             paramsRequired: 1,
+            example: '!img <keywords>',
         })
     }
 

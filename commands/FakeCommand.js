@@ -6,6 +6,7 @@ module.exports = class extends Command {
             name: 'fake',
             description: 'Imitate someone\'s writing style.',
             paramsRequired: 1,
+            example: '!fake <tagged-user>',
         })
     }
 

@@ -8,6 +8,7 @@ module.exports = class extends Command {
             name: 'reddit',
             description: 'Grab a random top post from a Reddit subreddit.',
             paramsRequired: 1,
+            example: '!reddit <subreddit>',
         })
     }
 

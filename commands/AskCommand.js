@@ -6,6 +6,7 @@ module.exports = class extends Command {
             name: 'ask',
             description: 'Ask the bot a question.',
             paramsRequired: 1,
+            example: '!ask <question>',
         })
     }
 

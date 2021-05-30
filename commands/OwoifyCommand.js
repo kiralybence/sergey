@@ -7,6 +7,7 @@ module.exports = class extends Command {
             name: 'owoify',
             description: 'Turn your message to "owo" style.',
             paramsRequired: 1,
+            example: '!owoify <message>',
         })
     }
 

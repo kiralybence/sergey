@@ -6,6 +6,7 @@ module.exports = class extends Command {
             name: 'topusers',
             description: 'Check who used a certain word the most times.',
             paramsRequired: 1,
+            example: '!topusers <word>',
         })
     }
 

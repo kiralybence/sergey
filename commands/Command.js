@@ -3,6 +3,7 @@ module.exports = class {
         this.name = args.name
         this.description = args.description
         this.paramsRequired = args.paramsRequired || 0
+        this.example = args.example || ('!' + args.name + ' <param>'.repeat(this.paramsRequired))
         this.ownerOnly = args.ownerOnly
     }
 

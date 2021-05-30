@@ -14,7 +14,7 @@ module.exports = class extends Command {
         registerCommands().forEach(command => {
             if (command.ownerOnly) return
 
-            list += `**!${command.name}** - ${command.description ? command.description : 'No description.'}\n`
+            list += `**${command.example}** - ${command.description ? command.description : 'No description.'}\n`
         })
 
         msg.reply(list)

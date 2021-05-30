@@ -6,6 +6,7 @@ module.exports = class extends Command {
             name: 'topwords',
             description: 'Check the most frequently used words of a user.',
             paramsRequired: 1,
+            example: '!topwords <tagged-user>',
         })
     }
 

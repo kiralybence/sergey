@@ -9,6 +9,7 @@ module.exports = class extends Command {
             name: 'mk',
             description: 'Search on Mangakakalot.',
             paramsRequired: 1,
+            example: '!mk <keywords>',
         })
     }
 

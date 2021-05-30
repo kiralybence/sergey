@@ -5,6 +5,7 @@ module.exports = class extends Command {
         super({
             name: 'xword',
             description: 'Get a random word starting with a certain letter.',
+            example: '!aword, !bword, !cword...',
         })
     }
 

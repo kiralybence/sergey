@@ -7,6 +7,7 @@ module.exports = class extends Command {
             name: 'mal',
             description: 'Search on MyAnimeList.',
             paramsRequired: 1,
+            example: '!mal <type?> <keywords>',
         })
     }
 
