@@ -20,10 +20,10 @@ module.exports = class extends Command {
                 limit: 1000,
             },
         }).then(resp => {
-            const allowedTypes = ['.jpg', '.png', '.webp', '.gif']
+            const allowedTypes = ['jpg', 'png', 'webp', 'gif']
             let posts = resp.data.data.children.filter(post => {
                 // Filter posts that contain media of allowed types
-                return allowedTypes.some(type => post.data.url.endsWith(type))
+                return allowedTypes.some(type => post.data.url.endsWith('.' + type))
             })
             let randomImg = randArr(posts).data.url
 
