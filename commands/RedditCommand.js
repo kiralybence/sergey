@@ -25,6 +25,12 @@ module.exports = class extends Command {
                 // Filter posts that contain media of allowed types
                 return allowedTypes.some(type => post.data.url.endsWith('.' + type))
             })
+
+            if (posts.length === 0) {
+                msg.reply('Nincs érvényes top poszt.')
+                return
+            }
+
             let randomImg = randArr(posts).data.url
 
             msg.reply(new Discord.MessageAttachment(randomImg))
