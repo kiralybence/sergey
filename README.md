@@ -7,7 +7,7 @@ Sergey is a Discord bot I've created for experimenting. The bot itself is privat
 - Study users' messages and generate a fake message to imitate a person's writing style
 - Try to interpret the meaning of a question and then answer it (heavily experimental)
 - Automatically react to a message with a specific emote if a specific keyword was detected
-- Grab a random image from Bing Image Search
+- Grab a random image from DuckDuckGo
 - Grab a random image from the top posts of a Reddit subreddit
 - MyAnimeList search
 
