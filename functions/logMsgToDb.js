@@ -1,9 +1,11 @@
 module.exports = () => {
     global.logMsgToDb = async (msg) => {
         // Get new words to be added
-        let newWords = msg.content
+        let newWords = removeFormatting(msg.content)
+            .toLowerCase()
             .split(' ')
-            .map(word => String(word).toLowerCase())
+            .filter(word => word !== '')
+            .map(word => word.trim())
 
         // Add new words to existing wordlist
         for (let i = 0; i < newWords.length; i++) {

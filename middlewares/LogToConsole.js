@@ -6,6 +6,6 @@ module.exports = class extends Middleware {
     }
 
     async run(msg) {
-        console.log(`[${formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${msg.content}`)
+        console.log(`[${formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${removeFormatting(msg.content)}`)
     }
 }
