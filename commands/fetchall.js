@@ -26,6 +26,7 @@ module.exports = class extends Command {
 
             // Add new
             fetchedMessages.forEach(message => {
+                // TODO: shouldBeLogged() to check if message isn't from a bot, isn't a command etc.
                 logMsgToDb(message)
             })
 
