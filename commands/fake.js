@@ -6,12 +6,13 @@ module.exports = class extends Command {
             name: 'fake',
             description: 'Imitate someone\'s writing style.',
             paramsRequired: 1,
-            example: '!fake <tagged-user>',
+            example: '!fake <tagged-user> <days?>',
         })
     }
 
     async run(msg) {
-        const userTag = this.getParamString(msg)
+        const userTag = this.getParamArray(msg)[0]
+        const days = this.getParamArray(msg)[1] || null
 
         if (!userTag.startsWith('<@!')) {
             msg.reply('The user isn\'t tagged. Tag the user with @ and try again.')
@@ -21,7 +22,7 @@ module.exports = class extends Command {
         const author_id = userTag
             .replace('<@!', '')
             .replace('>', '')
-        const starterWords = await getWordCountsOfAuthor(author_id, true)
+        const starterWords = await getWordCountsOfAuthor(author_id, true, days)
 
         let fakeText = []
         let starterPtr = 0
@@ -39,7 +40,7 @@ module.exports = class extends Command {
                 }
 
                 // To avoid repeating patterns
-                let topNextWords = await getTopNextsOfWordByAuthor(currentWord, author_id)
+                let topNextWords = await getTopNextsOfWordByAuthor(currentWord, author_id, days)
                 currentWord = topNextWords[numOfTimesInArr] !== undefined
                     ? topNextWords[numOfTimesInArr].word
                     : null
