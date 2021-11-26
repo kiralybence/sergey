@@ -10,8 +10,7 @@ module.exports = class extends Command {
     }
 
     shouldRun(msg) {
-        // TODO: this should contain the permissionMatches and hasEnoughParams checkings (without duplicating code)
-        return this.getValidLetter(msg)
+        return super.shouldRun(msg) && this.getValidLetter(msg)
     }
 
     async run(msg) {
