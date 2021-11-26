@@ -54,5 +54,19 @@ queryPromise(`
     ENGINE=InnoDB
 ;`)
 
+queryPromise('DROP TABLE IF EXISTS blacklisted_users')
+
+queryPromise(`
+    CREATE TABLE blacklisted_users (
+        id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        user_id VARCHAR(255) NOT NULL COLLATE 'utf8mb4_unicode_ci',
+        blacklisted_at TIMESTAMP NOT NULL DEFAULT current_timestamp(),
+        PRIMARY KEY (id),
+        UNIQUE INDEX user_id (user_id)
+    )
+    COLLATE='utf8mb4_unicode_ci'
+    ENGINE=InnoDB
+;`)
+
 console.log('Successfully migrated database.');
 process.exit();
