@@ -68,5 +68,5 @@ queryPromise(`
     ENGINE=InnoDB
 ;`)
 
-console.log('Successfully migrated database.');
-process.exit();
+console.log('Successfully migrated database.')
+process.exit()
