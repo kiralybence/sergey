@@ -7,6 +7,10 @@ module.exports = class extends Middleware {
         this.commands = getCommands()
     }
 
+    async shouldRun(msg) {
+        return super.shouldRun(msg) && !await isBlacklistedUser(msg.author.id)
+    }
+
     async run(msg) {
         this.commands.forEach(cmd => {
             if (cmd.shouldRun(msg)) {
