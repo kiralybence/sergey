@@ -1,3 +1,10 @@
+require('dotenv').config()
+
+const fs = require('fs')
+
+// Register functions globally
+fs.readdirSync(__dirname + '/../functions').forEach(fn => require('../functions/' + fn)())
+
 queryPromise('SET NAMES utf8mb4')
 
 queryPromise('DROP TABLE IF EXISTS words')
@@ -46,3 +53,6 @@ queryPromise(`
     COLLATE='utf8mb4_unicode_ci'
     ENGINE=InnoDB
 ;`)
+
+console.log('Successfully migrated database.');
+process.exit();
