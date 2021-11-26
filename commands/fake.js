@@ -14,14 +14,12 @@ module.exports = class extends Command {
         const userTag = this.getParamArray(msg)[0]
         const days = this.getParamArray(msg)[1] || null
 
-        if (!userTag.startsWith('<@!')) {
+        if (!isTaggedUser(userTag)) {
             msg.reply('The user isn\'t tagged. Tag the user with @ and try again.')
             return
         }
 
-        const author_id = userTag
-            .replace('<@!', '')
-            .replace('>', '')
+        const author_id = getIdOfTaggedUser(userTag)
         const starterWords = await getWordCountsOfAuthor(author_id, true, days)
 
         let fakeText = []
