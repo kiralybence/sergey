@@ -25,28 +25,36 @@ module.exports = class extends Command {
         let fakeText = []
         let starterPtr = 0
         let currentWord = starterWords[starterPtr].word
+
         for (let i = 0; i < 100; i++) {
+            // If there is a word currently selected
             if (currentWord) {
+                // We keep track of how many times we've already used a certain word (with numofTimesInArr),
+                // so the next time we'll pick a different one to avoid infinitely repeating patterns.
                 let numOfTimesInArr = fakeText.filter(word => word === currentWord).length
 
                 const isEmpty = !currentWord
                 const isLink = currentWord.startsWith('http://') || currentWord.startsWith('https://')
                 const isTag = currentWord.startsWith('<@')
                 const isCommand = currentWord.startsWith('!')
+
+                // We don't want to include meaningless things in the text (such as links or tags)
                 if (!(isEmpty || isLink || isTag || isCommand)) {
                     fakeText.push(currentWord)
                 }
 
-                // To avoid repeating patterns
+                // Get the words that most often follow the current word
                 let topNextWords = await getTopNextsOfWordByAuthor(currentWord, author_id, days)
+
+                // If there are any
                 currentWord = topNextWords[numOfTimesInArr] !== undefined
-                    ? topNextWords[numOfTimesInArr].word
-                    : null
-            } else {
-                // End of sentence
+                    ? topNextWords[numOfTimesInArr].word // Make it the next word
+                    : null // End the sentence
+            }
 
-                // fakeText.push(' MONDAT VÉGE ')
-
+            // End of sentence
+            else {
+                // If there are any more starter words left in the list
                 if (++starterPtr < starterWords.length) {
                     // Start a new sentence
                     currentWord = starterWords[starterPtr].word // new starter word
