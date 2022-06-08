@@ -2,10 +2,12 @@
 
 Sergey is a Discord bot I've created for experimenting. The bot itself is private, there is no invite link.
 
-## Main features
+## Main feature
 
-- Study users' messages and generate a fake message to imitate a person's writing style
-    - **TODO:** Ability to learn through voice chat (by converting speech to text)
+Fetch all messages of a user, study their way of writing, and then generate a fake text that imitates that person's writing style. Check out [`/commands/fake.js`](https://github.com/kiralybence/sergey/blob/master/commands/fake.js) to see how it works.
+
+## Other features
+
 - Try to interpret the meaning of a question and then answer it (heavily experimental)
 - Automatically react to a message with a specific emote if a specific keyword was detected
 - Grab a random image from DuckDuckGo
