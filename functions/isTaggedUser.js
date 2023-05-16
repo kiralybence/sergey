@@ -6,6 +6,6 @@ module.exports = () => {
      * @returns {boolean}
      */
     global.isTaggedUser = (taggedUser) => {
-        return taggedUser.startsWith('<@!')
+        return taggedUser.startsWith('<@')
     }
 }

@@ -8,7 +8,7 @@ module.exports = class {
     }
 
     shouldRun(msg) {
-        let nameMatches = msg.content.startsWith('!' + this.name)
+        let nameMatches = msg.content.startsWith('!' + this.name) // TODO: splitelve kéne === a legelső szóra, különben összeakadnak az ugyanolyan kezdetű commandok pl. !fetch és !fetchall
         let permissionMatches = this.ownerOnly ? msg.author.id === process.env.OWNER_DISCORD_USER_ID : true
         let hasEnoughParams = this.paramsRequired <= this.getParamArray(msg).length
 

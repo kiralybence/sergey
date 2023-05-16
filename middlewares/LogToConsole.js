@@ -1,11 +1,12 @@
-const Middleware = require('./Middleware')
+const Middleware = require('./Middleware');
+const Log = require('../classes/Log');
 
 module.exports = class extends Middleware {
     shouldRun(msg) {
-        return true
+        return true;
     }
 
     async run(msg) {
-        console.log(`[${formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${removeFormatting(msg.content)}`)
+        Log.console(msg);
     }
-}
+};

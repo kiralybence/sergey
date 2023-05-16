@@ -12,6 +12,7 @@ module.exports = () => {
 
         return user
             .replace('<@!', '')
+            .replace('<@', '')
             .replace('>', '')
     }
 }

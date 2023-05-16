@@ -17,9 +17,19 @@ client.on('message', msg => {
     // Run middlewares
     middlewares.forEach(middleware => {
         if (middleware.shouldRun(msg)) {
-            middleware.run(msg)
+            try {
+                middleware.run(msg)
+            } catch (err) {
+                console.error(err)
+            }
         }
     })
 })
 
 client.login(process.env.TOKEN)
+
+// ---------------------------------------------------------------------------------------------------------------------
+
+const Valorant = require('./classes/Valorant')
+
+// Valorant.init(client);

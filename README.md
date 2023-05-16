@@ -5,12 +5,9 @@ Sergey is a Discord bot I've created for experimenting. The bot itself is privat
 ## Main features
 
 - Study users' messages and generate a fake message to imitate a person's writing style
-    - **TODO:** Ability to learn through voice chat (by converting speech to text)
-- Try to interpret the meaning of a question and then answer it (heavily experimental)
 - Automatically react to a message with a specific emote if a specific keyword was detected
 - Grab a random image from DuckDuckGo
 - Grab a random image from the top posts of a Reddit subreddit
-- MyAnimeList search
 
 ## Warning
 
@@ -20,7 +17,7 @@ The bot exports and stores users' messages into the database without asking for 
 
 ### Prerequisites
 
-- Node v12+
+- Node v18+
 - MySQL 5.7+
 
 ### Setup
@@ -44,9 +41,3 @@ npm run migrate
 ```bash
 npm start
 ```
-
-## npm scripts (for development)
-
-- `npm run make:command <name>` Create a command
-- `npm run make:function <name>` Create a function
-- `npm run make:middleware <name>` Create a middleware

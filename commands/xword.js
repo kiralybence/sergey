@@ -10,11 +10,11 @@ module.exports = class extends Command {
     }
 
     shouldRun(msg) {
-        return super.shouldRun(msg) && this.getValidLetter(msg)
+        return this.getValidLetter(msg)
     }
 
     async run(msg) {
-        let randomWords = await queryPromise('SELECT * FROM x_words WHERE word LIKE ?', [
+        let randomWords = await query('SELECT * FROM x_words WHERE word LIKE ?', [
             this.getValidLetter(msg) + '%',
         ])
 
