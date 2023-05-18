@@ -13,37 +13,37 @@ module.exports = class Sergey {
         this.registerMiddlewares();
         this.registerClient();
 
-        Valorant.init();
+        // Valorant.init();
     }
 
     static registerCommands() {
-        let commands = fs.readdirSync(__dirname + '/../commands');
+        fs.readdirSync(__dirname + '/../commands')
+            .forEach(command => {
+                // The base command should not be registered
+                if (command === 'Command.js') {
+                    return;
+                }
 
-        // Remove .js extension
-        commands = commands.map(command => command.replace('.js', ''));
+                // Convert command names into command instances
+                command = new (require('../commands/' + command));
 
-        // The base command should not be registered
-        commands = commands.filter(command => command !== 'Command');
-
-        // Convert command names into command instances
-        commands = commands.map(command => new (require('../commands/' + command)));
-
-        Sergey.commands = commands;
+                Sergey.commands.push(command);
+            });
     }
 
     static registerMiddlewares() {
-        let middlewares = fs.readdirSync(__dirname + '/../middlewares');
+        fs.readdirSync(__dirname + '/../middlewares')
+            .forEach(middleware => {
+                // The base middleware should not be registered
+                if (middleware === 'Middleware.js') {
+                    return;
+                }
 
-        // Remove .js extension
-        middlewares = middlewares.map(middleware => middleware.replace('.js', ''));
+                // Convert middleware names into middleware instances
+                middleware = new (require('../middlewares/' + middleware));
 
-        // The base middleware should not be registered
-        middlewares = middlewares.filter(middleware => middleware !== 'Middleware');
-
-        // Convert middleware names into middleware instances
-        middlewares = middlewares.map(middleware => new (require('../middlewares/' + middleware)));
-
-        Sergey.middlewares = middlewares;
+                Sergey.middlewares.push(middleware);
+            });
     }
 
     static registerFunctionsGlobally() {

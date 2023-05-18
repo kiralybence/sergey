@@ -29,6 +29,9 @@ module.exports = class Valorant {
                 }
             }, 10000);
         });
+
+        // TODO: FIX
+        console.log(Sergey.commands);
     }
 
     /**
