@@ -4,7 +4,7 @@ module.exports = class Command {
         this.description = props?.description;
         this.paramsRequired = props?.paramsRequired ?? 0;
         this.example = props?.example ?? ('!' + props?.name + ' <param>'.repeat(this.paramsRequired));
-        this.ownerOnly = props?.ownerOnly;
+        this.ownerOnly = props?.ownerOnly ?? false;
     }
 
     shouldRun(msg) {
