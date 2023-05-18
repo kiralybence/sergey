@@ -1,17 +1,17 @@
-const Middleware = require('./Middleware')
+const Middleware = require('./Middleware');
 
-module.exports = class extends Middleware {
+module.exports = class HandleCommandsMiddleware extends Middleware {
     constructor() {
-        super()
+        super();
 
-        this.commands = getCommands()
+        this.commands = getCommands();
     }
 
     async run(msg) {
         this.commands.forEach(cmd => {
             if (cmd.shouldRun(msg)) {
-                cmd.run(msg)
+                cmd.run(msg);
             }
-        })
+        });
     }
-}
+};

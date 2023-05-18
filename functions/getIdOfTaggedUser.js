@@ -7,12 +7,12 @@ module.exports = () => {
      */
     global.getIdOfTaggedUser = (user) => {
         if (!isTaggedUser(user)) {
-            return null
+            return null;
         }
 
         return user
             .replace('<@!', '')
             .replace('<@', '')
-            .replace('>', '')
-    }
-}
+            .replace('>', '');
+    };
+};

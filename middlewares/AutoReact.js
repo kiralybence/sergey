@@ -1,16 +1,16 @@
-const Middleware = require('./Middleware')
+const Middleware = require('./Middleware');
 
-module.exports = class extends Middleware {
+module.exports = class AutoReactMiddleware extends Middleware {
     async run(msg) {
-        const autoReactions = await query('SELECT * FROM auto_reactions')
+        const autoReactions = await query('select * from auto_reactions');
 
         autoReactions.forEach(autoReaction => {
-            let normalizedMessage = removeAccents(msg.content).toLowerCase()
-            let normalizedKeyword = removeAccents(autoReaction.keyword).toLowerCase()
+            let normalizedMessage = removeAccents(msg.content).toLowerCase();
+            let normalizedKeyword = removeAccents(autoReaction.keyword).toLowerCase();
 
             if (normalizedMessage.includes(normalizedKeyword)) {
-                msg.react(autoReaction.emote)
+                msg.react(autoReaction.emote);
             }
-        })
+        });
     }
-}
+};

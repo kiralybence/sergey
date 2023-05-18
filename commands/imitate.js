@@ -8,7 +8,7 @@ module.exports = class ImitateCommand extends Command {
             description: 'Imitate someone\'s writing style.',
             paramsRequired: 1,
             example: '!imitate <tagged-user> <days?>',
-        })
+        });
     }
 
     async run(msg) {
@@ -27,4 +27,4 @@ module.exports = class ImitateCommand extends Command {
 
         msg.channel.send(`"${fakeText}" - ${userTag}`);
     }
-}
+};

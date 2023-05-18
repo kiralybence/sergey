@@ -1,28 +1,29 @@
-const Command = require('./Command')
+const Command = require('./Command');
+const Emote = require('../classes/Emote');
 
-module.exports = class extends Command {
+module.exports = class RollCommand extends Command {
     constructor() {
         super({
             name: 'roll',
             description: 'Gamble against the bot.',
-        })
+        });
     }
 
     async run(msg) {
-        let userPoints = rand(1, 100)
-        let botPoints = rand(1, 100)
-        let result
+        let userPoints = rand(1, 100);
+        let botPoints = rand(1, 100);
+        let result;
 
         if (userPoints < botPoints) {
-            result = 'Winner: Sergey <a:kekwdisco:835484310051487754>'
+            result = 'Winner: Sergey <a:kekwdisco:835484310051487754>';
         } else if (userPoints > botPoints) {
-            result = `Winner: ${msg.author.username} 😡`
+            result = `Winner: ${msg.author.username} 😡`;
         } else if (userPoints === botPoints) {
-            result = '<:4Weird:792111149092831232>'
+            result = Emote['4Weird'];
         } else {
-            result = 'Ennek az üzenetnek soha nem szabadna látszódnia.'
+            result = 'Ennek az üzenetnek soha nem szabadna látszódnia.';
         }
 
-        msg.channel.send(`${msg.author.username}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`)
+        msg.channel.send(`${msg.author.username}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
     }
-}
+};

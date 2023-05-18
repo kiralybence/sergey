@@ -6,6 +6,6 @@ module.exports = () => {
      * @param max Inclusive
      */
     global.rand = (min, max) => {
-        return Math.floor(Math.random() * (max + 1)) + min
-    }
-}
+        return Math.floor(Math.random() * (max + 1)) + min;
+    };
+};
