@@ -1,4 +1,4 @@
-const Word = require('../classes/Word');
+const Word = require('./Word');
 
 module.exports = class Imitator {
     /**

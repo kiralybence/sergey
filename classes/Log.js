@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-const Word = require('../classes/Word');
-const Formatter = require('../classes/Formatter');
+const Word = require('./Word');
+const Formatter = require('./Formatter');
 
 module.exports = class Log {
     /**

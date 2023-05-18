@@ -1,16 +1,15 @@
 const axios = require('axios');
-const Emote = require('../classes/Emote');
-const DiscordChannel = require('../classes/DiscordChannel');
-const Discord = require('discord.js');
+const Emote = require('./Emote');
+const DiscordChannel = require('./DiscordChannel');
+const Sergey = require('./Sergey');
 
 module.exports = class Valorant {
     /**
      * Initialize everything that is Valorant related.
      *
-     * @param client {Discord.Client}
      * @return {Promise<void>}
      */
-    static async init(client) {
+    static async init() {
         let users = await Valorant.getTrackedUsers();
 
         users.forEach(user => {
@@ -24,7 +23,7 @@ module.exports = class Valorant {
 
             setInterval(() => {
                 try {
-                    Valorant.sendLossNotifications(user, client);
+                    Valorant.sendLossNotifications(user);
                 } catch (err) {
                     console.error(err);
                 }
@@ -79,16 +78,15 @@ module.exports = class Valorant {
      * Check if the user has any new losses (and send a message in chat if there are).
      *
      * @param user {Object}
-     * @param client {Discord.Client}
      */
-    static async sendLossNotifications(user, client) {
+    static async sendLossNotifications(user) {
         let matches = await this.fetchUntrackedMatches(user);
 
         matches.forEach(match => {
             this.saveMatch(match, user.id);
 
             if (!match.won) {
-                this.sendLossMessage(match, user, client);
+                this.sendLossMessage(match, user);
             }
         });
     }
@@ -141,12 +139,11 @@ module.exports = class Valorant {
      *
      * @param match {Object}
      * @param user {Object}
-     * @param client {Discord.Client}
      */
-    static sendLossMessage(match, user, client) {
+    static sendLossMessage(match, user) {
         let message = this.buildLossMessage(match, user);
 
-        client.channels.cache.get(DiscordChannel.weebsChat).send(message);
+        Sergey.client.channels.cache.get(DiscordChannel.weebsChat).send(message);
         // console.log(message);
     }
 };

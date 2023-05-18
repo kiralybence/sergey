@@ -1,14 +1,9 @@
 const Middleware = require('./Middleware');
+const Sergey = require('../classes/Sergey');
 
 module.exports = class HandleCommandsMiddleware extends Middleware {
-    constructor() {
-        super();
-
-        this.commands = getCommands();
-    }
-
     async run(msg) {
-        this.commands.forEach(cmd => {
+        Sergey.commands.forEach(cmd => {
             if (cmd.shouldRun(msg)) {
                 cmd.run(msg);
             }
