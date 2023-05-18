@@ -47,7 +47,7 @@ module.exports = class Sergey {
     }
 
     static registerFunctionsGlobally() {
-        fs.readdirSync(__dirname + '/../functions').forEach(fn => require('../functions/' + fn)());
+        fs.readdirSync(__dirname + '/../functions').forEach(fn => require('../functions/' + fn));
     }
 
     static registerClient() {

@@ -9,14 +9,12 @@ const dbh = mysql.createConnection({
 
 dbh.query('set names utf8mb4');
 
-module.exports = () => {
-    global.query = (statement, params = null) => {
-        return new Promise((resolve, reject) => {
-            dbh.query(statement, params, (error, results) => {
-                if (error) reject(error);
+global.query = (statement, params = null) => {
+    return new Promise((resolve, reject) => {
+        dbh.query(statement, params, (error, results) => {
+            if (error) reject(error);
 
-                resolve(results);
-            });
+            resolve(results);
         });
-    };
+    });
 };
