@@ -55,14 +55,21 @@ module.exports = class Formatter {
             '~~', // strikethrough
             '||', // spoiler
             '`', // code blocks
+        ];
 
-            // TODO: these should only be removed if they're at the beginning of a row
-            // '>>> ', // block quotes
-            // '> ', // block quotes
+        const starterFormatters = [
+            '>>> ', // block quotes
+            '> ', // block quotes
         ];
 
         formatters.forEach(formatter => {
             str = str.replace(new RegExp('\\' + formatter, 'g'), '');
+        });
+
+        starterFormatters.forEach(formatter => {
+            if (str.startsWith(formatter)) {
+                str = str.substring(formatter.length, str.length);
+            }
         });
 
         str = str.replace(new RegExp('\\n', 'g'), ' ');
