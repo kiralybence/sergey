@@ -1,6 +1,5 @@
 const axios = require('axios');
 const Emote = require('./Emote');
-const DiscordChannel = require('./DiscordChannel');
 const Sergey = require('./Sergey');
 
 module.exports = class Valorant {
@@ -146,7 +145,7 @@ module.exports = class Valorant {
     static sendLossMessage(match, user) {
         let message = this.buildLossMessage(match, user);
 
-        Sergey.client.channels.cache.get(DiscordChannel.weebsChat).send(message);
+        Sergey.client.channels.cache.get(process.env.MAIN_CHANNEL_ID).send(message);
         // console.log(message);
     }
 };
