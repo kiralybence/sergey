@@ -1,4 +1,5 @@
 const Command = require('./Command');
+const Formatter = require('../classes/Formatter');
 
 module.exports = class InsultCommand extends Command {
     constructor() {
@@ -13,7 +14,7 @@ module.exports = class InsultCommand extends Command {
     async run(msg) {
         const userTag = this.getParamArray(msg)[0];
 
-        if (!isTaggedUser(userTag)) {
+        if (!Formatter.isTaggedUser(userTag)) {
             msg.reply('The user isn\'t tagged. Tag the user with @ and try again.');
             return;
         }

@@ -1,5 +1,6 @@
 const Command = require('./Command');
 const Imitator = require('../classes/Imitator');
+const Formatter = require('../classes/Formatter');
 
 module.exports = class ImitateCommand extends Command {
     constructor() {
@@ -16,12 +17,12 @@ module.exports = class ImitateCommand extends Command {
         let userTag = params[0];
         let days = params?.[1];
 
-        if (!isTaggedUser(userTag)) {
+        if (!Formatter.isTaggedUser(userTag)) {
             msg.reply('The user isn\'t tagged. Tag the user with @ and try again.');
             return;
         }
 
-        let author_id = getIdOfTaggedUser(userTag);
+        let author_id = Formatter.getIdOfTaggedUser(userTag);
         let imitator = new Imitator(author_id, days);
         let fakeText = await imitator.imitate();
 

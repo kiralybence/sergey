@@ -1,6 +1,7 @@
 const Command = require('./Command');
 const Discord = require('discord.js');
 const axios = require('axios');
+const Formatter = require('../classes/Formatter');
 
 module.exports = class RedditCommand extends Command {
     constructor() {
@@ -31,7 +32,7 @@ module.exports = class RedditCommand extends Command {
             }
 
             let randomPost = randArr(posts);
-            let fileName = getFileNameFromUrl(randomPost.data.url);
+            let fileName = Formatter.getFileNameFromUrl(randomPost.data.url);
 
             if (randomPost.data.over_18) {
                 fileName = `SPOILER_${fileName}`;

@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const Word = require('../classes/Word');
+const Formatter = require('../classes/Formatter');
 
 module.exports = class Log {
     /**
@@ -10,7 +11,7 @@ module.exports = class Log {
      */
     static async database(msg) {
         // Get new words to be added
-        let newWords = removeFormatting(msg.content)
+        let newWords = Formatter.removeFormatting(msg.content)
             .toLowerCase()
             .split(' ')
             .map(word => word.trim())
@@ -50,6 +51,6 @@ module.exports = class Log {
      * @return {void}
      */
     static console(msg) {
-        console.log(`[${formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${removeFormatting(msg.content)}`);
+        console.log(`[${Formatter.formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${Formatter.removeFormatting(msg.content)}`);
     }
 };
