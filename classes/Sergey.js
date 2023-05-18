@@ -8,9 +8,9 @@ module.exports = class Sergey {
     static client = new Discord.Client();
 
     static init() {
-        this.registerMiddlewares();
-        this.registerCommands();
         this.registerFunctionsGlobally();
+        this.registerCommands();
+        this.registerMiddlewares();
         this.registerClient();
 
         Valorant.init();
