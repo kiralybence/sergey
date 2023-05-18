@@ -15,7 +15,7 @@ module.exports = class RollCommand extends Command {
         let result;
 
         if (userPoints < botPoints) {
-            result = 'Winner: Sergey <a:kekwdisco:835484310051487754>';
+            result = `Winner: Sergey ${Emote.KEKWDISCO}`;
         } else if (userPoints > botPoints) {
             result = `Winner: ${msg.author.username} 😡`;
         } else if (userPoints === botPoints) {
