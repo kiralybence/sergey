@@ -8,7 +8,7 @@ module.exports = class Command {
     }
 
     shouldRun(msg) {
-        let nameMatches = msg.content.split(' ', 1).shift() === this.name;
+        let nameMatches = msg.content.split(' ', 1).shift() === '!' + this.name;
         let permissionMatches = this.ownerOnly ? msg.author.id === process.env.OWNER_DISCORD_USER_ID : true;
         let hasEnoughParams = this.getParamArray(msg).length >= this.paramsRequired;
 
