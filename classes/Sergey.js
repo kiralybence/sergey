@@ -1,16 +1,21 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const Valorant = require('./Valorant');
+const winston = require('winston');
+const Formatter = require('./Formatter');
+require('winston-daily-rotate-file');
 
 module.exports = class Sergey {
     static commands = [];
     static middlewares = [];
     static client = new Discord.Client();
+    static logger = null;
 
     static init() {
         this.registerFunctionsGlobally();
         this.registerCommands();
         this.registerMiddlewares();
+        this.registerLogger();
         this.registerClient();
 
         // Valorant.init();
@@ -55,18 +60,44 @@ module.exports = class Sergey {
             console.log(`Connected as ${Sergey.client.user.tag}`);
         });
 
-        Sergey.client.on('message', msg => {
-            Sergey.middlewares.forEach(middleware => {
+        Sergey.client.on('message', async msg => {
+            for (const middleware of Sergey.middlewares) {
                 if (middleware.shouldRun(msg)) {
                     try {
-                        middleware.run(msg);
+                        await middleware.run(msg);
                     } catch (err) {
                         console.error(err);
+                        
+                        Sergey.logger.log({
+                            level: 'error',
+                            message: err.stack || err.message || err,
+                        });
+
+                        break;
                     }
                 }
-            });
+            }
         });
 
         Sergey.client.login(process.env.TOKEN);
+    }
+
+    static registerLogger() {
+        Sergey.logger = winston.createLogger({
+            format: winston.format.combine(
+                winston.format.timestamp({
+                    format: Formatter.formatTimestamp,
+                }),
+                winston.format.printf(({ timestamp, level, message }) => {
+                    return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+                }),
+            ),
+            transports: [
+                new winston.transports.DailyRotateFile({
+                    filename: 'logs/%DATE%.log',
+                    datePattern: 'YYYY-MM-DD',
+                }),
+            ],
+        });
     }
 };

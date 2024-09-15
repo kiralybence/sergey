@@ -3,10 +3,10 @@ const Sergey = require('../classes/Sergey');
 
 module.exports = class HandleCommandsMiddleware extends Middleware {
     async run(msg) {
-        Sergey.commands.forEach(cmd => {
+        for (const cmd of Sergey.commands) {
             if (cmd.shouldRun(msg)) {
-                cmd.run(msg);
+                await cmd.run(msg);
             }
-        });
+        }
     }
 };

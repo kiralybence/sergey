@@ -40,15 +40,17 @@ module.exports = class RedditCommand extends Command {
 
             msg.reply(new Discord.MessageAttachment(randomPost.data.url, fileName));
         }).catch(err => {
-            console.error(err);
+            switch (err.response.status) {
+                case 403:
+                    msg.reply('Letiltott a reddit, mert túl sokat használtuk a commandot. Várj egy kicsit.');
+                    return;
 
-            if (err.response.status === 403) {
-                msg.reply('Letiltott a reddit, mert túl sokat használtuk a commandot. Várj egy kicsit.');
-            } else if (err.response.status === 404) {
-                msg.reply('Nincs ilyen subreddit.');
-            } else {
-                msg.reply('Hiba történt 😡');
+                case 404:
+                    msg.reply('Nincs ilyen subreddit.');
+                    return;
             }
+
+            throw err;
         });
     }
 };
