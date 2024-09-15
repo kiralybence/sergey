@@ -13,13 +13,14 @@ module.exports = class ImgCommand extends Command {
     }
 
     async run(msg) {
-        let images = await image_search({query: this.getParamString(msg)});
+        let keyword = this.getParamString(msg);
+        let images = await image_search({query: keyword});
 
         if (images.length === 0) {
-            msg.reply('Nincs találat.');
+            msg.reply(`No images found with keyword: "${keyword}"`);
             return;
         }
 
-        msg.reply(new Discord.MessageAttachment(randArr(images.slice(0, 10)).image));
+        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.MessageAttachment(randArr(images.slice(0, 10)).image)] });
     }
 };
