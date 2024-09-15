@@ -51,6 +51,10 @@ module.exports = class Log {
      * @return {void}
      */
     static console(msg) {
-        console.log(`[${Formatter.formatTimestamp(msg.createdTimestamp)}] ${msg.author.username}: ${Formatter.removeFormatting(msg.content)}`);
+        let breadcrumbs = msg.channel.type === 'dm'
+            ? ['DM', msg.author.username]
+            : [msg.guild.name, '#' + msg.channel.name, msg.author.username];
+
+        console.log(`[${Formatter.formatTimestamp(msg.createdTimestamp)}] ${breadcrumbs.join(' > ')}: ${Formatter.removeFormatting(msg.content)}`);
     }
 };
