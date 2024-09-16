@@ -81,12 +81,13 @@ module.exports = class Imitator {
      */
     async getNextFollowingWord() {
         let followingWord = null;
+        let iterations = 0; // We must keep track of iterations, because if a word was found, but it doesn't meet the criteria, then it shouldn't be picked again.
 
         do {
-            // Using -1 for the offset, because this is being called right after inserting the current word,
+            // Subtracting 1 from the offset, because this is being called right after inserting the current word,
             // so there is no way the next top word has been used before.
             let timesUsed = this.getTimesUsedInFakeText(this.selectedWord.word);
-            let offset = timesUsed > 0 ? timesUsed - 1 : timesUsed;
+            let offset = (timesUsed > 0 ? timesUsed - 1 : timesUsed) + iterations++;
 
             followingWord = await this.selectedWord.getNextFollowingWord(offset, this.days);
         } while (followingWord !== null && !followingWord.canBeUsedToImitate());
