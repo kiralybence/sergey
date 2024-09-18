@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const Valorant = require('./Valorant');
 const winston = require('winston');
 const Formatter = require('./Formatter');
-const DB = require('./DB');
 require('winston-daily-rotate-file');
 
 module.exports = class Sergey {
@@ -13,7 +12,6 @@ module.exports = class Sergey {
     static logger = null;
 
     static init() {
-        DB.init();
         this.registerCommands();
         this.registerMiddlewares();
         this.registerLogger();
