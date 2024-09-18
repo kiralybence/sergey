@@ -56,21 +56,19 @@ module.exports = class Sergey {
         });
 
         Sergey.client.on('message', async msg => {
-            for (const middleware of Sergey.middlewares) {
-                if (middleware.shouldRun(msg)) {
-                    try {
+            try {
+                for (const middleware of Sergey.middlewares) {
+                    if (middleware.shouldRun(msg)) {
                         await middleware.run(msg);
-                    } catch (err) {
-                        console.error(err);
-                        
-                        Sergey.logger.log({
-                            level: 'error',
-                            message: err.stack || err.message || err,
-                        });
-
-                        break;
                     }
                 }
+            } catch (err) {
+                console.error(err);
+                
+                Sergey.logger.log({
+                    level: 'error',
+                    message: err.stack || err.message || err,
+                });
             }
         });
 
