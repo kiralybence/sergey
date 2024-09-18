@@ -1,5 +1,6 @@
 const dayjs = require('dayjs');
 const Discord = require('discord.js');
+const DB = require('./DB');
 
 module.exports = class Word {
     constructor(props) {
@@ -26,9 +27,9 @@ module.exports = class Word {
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00';
 
-        await query(`set sql_mode=(select replace(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))`);
+        await DB.query(`set sql_mode=(select replace(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))`);
 
-        return await query(`
+        return await DB.query(`
             select *
             from words
             where author_id = ?
@@ -60,7 +61,7 @@ module.exports = class Word {
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00'; // anything
 
-        return await query(`
+        return await DB.query(`
             select *
             from words
             where prev_id in (

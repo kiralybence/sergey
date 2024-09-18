@@ -1,5 +1,7 @@
 const Command = require('./Command');
 const Formatter = require('../classes/Formatter');
+const DB = require('../classes/DB');
+const Utils = require('../classes/Utils');
 
 module.exports = class InsultCommand extends Command {
     constructor() {
@@ -19,8 +21,8 @@ module.exports = class InsultCommand extends Command {
             return;
         }
 
-        let insults = await query('select * from insults');
+        let insults = await DB.query('select * from insults');
 
-        msg.channel.send(`${userTag} ${randArr(insults).message}`);
+        msg.channel.send(`${userTag} ${Utils.randArr(insults).message}`);
     }
 };

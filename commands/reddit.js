@@ -2,6 +2,7 @@ const Command = require('./Command');
 const Discord = require('discord.js');
 const axios = require('axios');
 const Formatter = require('../classes/Formatter');
+const Utils = require('../classes/Utils');
 
 module.exports = class RedditCommand extends Command {
     constructor() {
@@ -31,7 +32,7 @@ module.exports = class RedditCommand extends Command {
                 return;
             }
 
-            let randomPost = randArr(posts);
+            let randomPost = Utils.randArr(posts);
             let fileName = Formatter.getFileNameFromUrl(randomPost.data.url);
 
             if (randomPost.data.over_18) {

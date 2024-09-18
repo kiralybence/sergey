@@ -1,4 +1,6 @@
 const Command = require('./Command');
+const DB = require('../classes/DB');
+const Utils = require('../classes/Utils');
 
 module.exports = class XwordCommand extends Command {
     constructor() {
@@ -14,7 +16,7 @@ module.exports = class XwordCommand extends Command {
     }
 
     async run(msg) {
-        let randomWords = await query('select * from x_words where word like ?', [
+        let randomWords = await DB.query('select * from x_words where word like ?', [
             this.getValidLetter(msg) + '%',
         ]);
 
@@ -23,7 +25,7 @@ module.exports = class XwordCommand extends Command {
             return;
         }
 
-        msg.reply(randArr(randomWords).word);
+        msg.reply(Utils.randArr(randomWords).word);
     }
 
     getValidLetter(msg) {

@@ -1,5 +1,6 @@
 const Command = require('./Command');
 const Emote = require('../classes/Emote');
+const Utils = require('../classes/Utils');
 
 module.exports = class RollCommand extends Command {
     constructor() {
@@ -10,8 +11,8 @@ module.exports = class RollCommand extends Command {
     }
 
     async run(msg) {
-        let userPoints = rand(1, 100);
-        let botPoints = rand(1, 100);
+        let userPoints = Utils.rand(1, 100);
+        let botPoints = Utils.rand(1, 100);
         let result;
 
         if (userPoints < botPoints) {

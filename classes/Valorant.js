@@ -1,6 +1,7 @@
 const axios = require('axios');
 const Emote = require('./Emote');
 const Sergey = require('./Sergey');
+const DB = require('./DB');
 
 module.exports = class Valorant {
     /**
@@ -39,7 +40,7 @@ module.exports = class Valorant {
      * @return {Promise<Object[]>}
      */
     static getTrackedUsers() {
-        return query('select * from tracked_valorant_users')
+        return DB.query('select * from tracked_valorant_users')
             .then(users => users);
     }
 
@@ -101,7 +102,7 @@ module.exports = class Valorant {
      * @return {Promise<Object[]>}
      */
     static filterUntrackedMatches(matches, userId) {
-        return query('select match_id from valorant_games where match_id in (?) and user_id = ?', [
+        return DB.query('select match_id from valorant_games where match_id in (?) and user_id = ?', [
             matches.map(match => match.matchId),
             userId,
         ])
@@ -118,7 +119,7 @@ module.exports = class Valorant {
      * @param userId {Number}
      */
     static saveMatch(match, userId) {
-        query('insert into valorant_games (match_id, match_data, user_id) values (?, ?, ?)', [
+        DB.query('insert into valorant_games (match_id, match_data, user_id) values (?, ?, ?)', [
             match.matchId,
             JSON.stringify(match),
             userId,

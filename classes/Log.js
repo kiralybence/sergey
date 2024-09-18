@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const Word = require('./Word');
 const Formatter = require('./Formatter');
+const DB = require('./DB');
 
 module.exports = class Log {
     /**
@@ -24,7 +25,7 @@ module.exports = class Log {
             // If there is a previous word
             if (newWords[i - 1]) {
                 // Search for it
-                prev_id = await query(`
+                prev_id = await DB.query(`
                     select *
                     from words
                     where word = ?
@@ -35,7 +36,7 @@ module.exports = class Log {
                 ]).then(results => results?.[0]?.id);
             }
 
-            await query('insert into words (word, prev_id, author_id, created_at) values (?, ?, ?, ?)', [
+            await DB.query('insert into words (word, prev_id, author_id, created_at) values (?, ?, ?, ?)', [
                 String(newWords[i]).substring(0, 255),
                 prev_id,
                 msg.author.id,

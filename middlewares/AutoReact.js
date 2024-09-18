@@ -1,9 +1,10 @@
 const Middleware = require('./Middleware');
 const Formatter = require('../classes/Formatter');
+const DB = require('../classes/DB');
 
 module.exports = class AutoReactMiddleware extends Middleware {
     async run(msg) {
-        const autoReactions = await query('select * from auto_reactions');
+        const autoReactions = await DB.query('select * from auto_reactions');
 
         autoReactions.forEach(autoReaction => {
             let normalizedMessage = Formatter.removeAccents(msg.content).toLowerCase();

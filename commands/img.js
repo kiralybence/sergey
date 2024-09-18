@@ -1,5 +1,6 @@
 const Command = require('./Command');
 const Discord = require('discord.js');
+const Utils = require('../classes/Utils');
 const { image_search } = require('duckduckgo-images-api');
 
 module.exports = class ImgCommand extends Command {
@@ -21,6 +22,6 @@ module.exports = class ImgCommand extends Command {
             return;
         }
 
-        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.MessageAttachment(randArr(images.slice(0, 10)).image)] });
+        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.MessageAttachment(Utils.randArr(images.slice(0, 10)).image)] });
     }
 };
