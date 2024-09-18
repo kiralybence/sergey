@@ -111,7 +111,14 @@ module.exports = class Word {
      * @return {boolean}
      */
     isTag() {
-        return this.word.startsWith('<@') || this.word.startsWith('<#') || this.word.startsWith('<:');
+        let prefixes = [
+            '<@', // user
+            '<#', // text channel
+            '<:', // emote
+            '<a:', // animated emote
+        ];
+
+        return prefixes.some(prefix => this.word.startsWith(prefix));
     }
 
     /**
