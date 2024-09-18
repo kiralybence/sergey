@@ -111,7 +111,7 @@ module.exports = class Word {
      * @return {boolean}
      */
     isTag() {
-        return this.word.startsWith('<@');
+        return this.word.startsWith('<@') || this.word.startsWith('<#') || this.word.startsWith('<:');
     }
 
     /**
