@@ -58,7 +58,7 @@ module.exports = class Sergey {
                 Discord.GatewayIntentBits.MessageContent,
                 Discord.GatewayIntentBits.GuildMessageReactions,
                 Discord.GatewayIntentBits.GuildEmojisAndStickers,
-              ],
+            ],
         });
 
         Sergey.client.on('ready', () => {
