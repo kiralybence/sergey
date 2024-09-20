@@ -1,7 +1,7 @@
 const Command = require('./Command');
 const Discord = require('discord.js');
 const Utils = require('../classes/Utils');
-const { image_search } = require('duckduckgo-images-api');
+const DuckDuckGo = require('duckduckgo-images-api');
 
 module.exports = class ImgCommand extends Command {
     constructor() {
@@ -15,7 +15,7 @@ module.exports = class ImgCommand extends Command {
 
     async run(msg) {
         let keyword = this.getParamString(msg);
-        let images = await image_search({query: keyword});
+        let images = await DuckDuckGo.image_search({query: keyword});
 
         if (images.length === 0) {
             msg.reply(`No images found with keyword: "${keyword}"`);
