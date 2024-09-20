@@ -22,6 +22,6 @@ module.exports = class ImgCommand extends Command {
             return;
         }
 
-        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.MessageAttachment(Utils.randArr(images.slice(0, 10)).image)] });
+        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.AttachmentBuilder(Utils.randArr(images.slice(0, 10)).image)] });
     }
 };

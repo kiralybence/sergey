@@ -39,7 +39,7 @@ module.exports = class RedditCommand extends Command {
                 fileName = `SPOILER_${fileName}`;
             }
 
-            msg.reply(new Discord.MessageAttachment(randomPost.data.url, fileName));
+            msg.reply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
         }).catch(err => {
             switch (err.response.status) {
                 case 403:

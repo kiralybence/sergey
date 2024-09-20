@@ -2,7 +2,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.16.2",
     "dotenv": "^8.2.0",
     "duckduckgo-images-api": "^1.0.5",
     "mysql2": "^3.3.1",

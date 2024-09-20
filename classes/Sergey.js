@@ -8,7 +8,7 @@ require('winston-daily-rotate-file');
 module.exports = class Sergey {
     static commands = [];
     static middlewares = [];
-    static client = new Discord.Client();
+    static client = null;
     static logger = null;
 
     static init() {
@@ -51,11 +51,21 @@ module.exports = class Sergey {
     }
 
     static registerClient() {
+        Sergey.client = new Discord.Client({
+            intents: [
+                Discord.GatewayIntentBits.Guilds,
+                Discord.GatewayIntentBits.GuildMessages,
+                Discord.GatewayIntentBits.MessageContent,
+                Discord.GatewayIntentBits.GuildMessageReactions,
+                Discord.GatewayIntentBits.GuildEmojisAndStickers,
+              ],
+        });
+
         Sergey.client.on('ready', () => {
             console.log(`Connected as ${Sergey.client.user.tag}`);
         });
 
-        Sergey.client.on('message', async msg => {
+        Sergey.client.on('messageCreate', async msg => {
             try {
                 for (const middleware of Sergey.middlewares) {
                     if (middleware.shouldRun(msg)) {
