@@ -114,6 +114,7 @@ module.exports = class Word {
         let prefixes = [
             '<@', // user
             '<#', // text channel
+            '<#', // voice channel
             '<:', // emote
             '<a:', // animated emote
         ];
