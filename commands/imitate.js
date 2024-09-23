@@ -25,7 +25,7 @@ module.exports = class ImitateCommand extends Command {
         let days = interaction.options.getInteger('days');
         let imitator = new Imitator(user.id, days);
         let text = await imitator.imitate();
-        let name = user.globalName || user.usernam;
+        let name = user.globalName || user.username;
 
         interaction.editReply(`"${text}" - ${name}`);
     }
