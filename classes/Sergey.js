@@ -29,7 +29,6 @@ module.exports = class Sergey {
                 // The base command should not be registered
                 if (
                     filename === 'Command.js'
-                    // || filename === 'fetchall.js' // temp
                     || filename === 'valorant.js' // temp
                 ) {
                     return;
