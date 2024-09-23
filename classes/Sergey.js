@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const Valorant = require('./Valorant');
 const winston = require('winston');
 const Formatter = require('./Formatter');
-const Middleware = require('./Middleware');
+const MiddlewareHandler = require('./MiddlewareHandler');
 const LogToConsole = require('../middlewares/LogToConsole');
 const FetchWords = require('../middlewares/FetchWords');
 const AutoReact = require('../middlewares/AutoReact');
@@ -65,7 +65,7 @@ module.exports = class Sergey {
 
         Sergey.client.on(Discord.Events.MessageCreate, async message => {
             try {
-                await Middleware.call(message, [
+                await MiddlewareHandler.call(message, [
                     new LogToConsole(),
                     new FetchWords(),
                     new AutoReact(),
@@ -84,7 +84,7 @@ module.exports = class Sergey {
             if (!interaction.isChatInputCommand()) return;
 
             try {
-                await Middleware.call(interaction, [
+                await MiddlewareHandler.call(interaction, [
                     new HandleCommand(),
                 ]);
             } catch (err) {
