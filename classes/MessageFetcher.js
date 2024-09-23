@@ -81,7 +81,7 @@ module.exports = class MessageFetcher {
             // Add new
             for (const message of fetchedMessages.values()) {
                 if (message.author.bot) {
-                    return;
+                    continue;
                 }
 
                 await MessageFetcher.fromMessage(message);
