@@ -5,17 +5,22 @@ const Formatter = require('../classes/Formatter');
 const Utils = require('../classes/Utils');
 
 module.exports = class RedditCommand extends Command {
-    constructor() {
-        super({
-            name: 'reddit',
-            description: 'Grab a random top post from a Reddit subreddit.',
-            paramsRequired: 1,
-            example: '!reddit <subreddit>',
-        });
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('reddit')
+        .setDescription('Show a random top post from a Reddit subreddit.')
+        .addStringOption(option => 
+            option
+                .setName('subreddit')
+                .setDescription('The subreddit you want to get an image from (without r/).')
+                .setRequired(true)
+        );
 
-    async run(msg) {
-        axios.get(`https://www.reddit.com/r/${this.getParamArray(msg)[0]}/top.json?t=all`, {
+    async execute(interaction) {
+        await interaction.deferReply();
+
+        let subreddit = interaction.options.getString('subreddit');
+
+        axios.get(`https://www.reddit.com/r/${subreddit}/top.json?t=all`, {
             params: {
                 limit: 100,
             },
@@ -28,7 +33,7 @@ module.exports = class RedditCommand extends Command {
             });
 
             if (posts.length === 0) {
-                msg.reply('Nincs érvényes top poszt.');
+                interaction.editReply(`No posts found in r/${subreddit}.`);
                 return;
             }
 
@@ -39,15 +44,15 @@ module.exports = class RedditCommand extends Command {
                 fileName = `SPOILER_${fileName}`;
             }
 
-            msg.reply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
+            interaction.editReply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
         }).catch(err => {
             switch (err.response.status) {
                 case 403:
-                    msg.reply('Letiltott a reddit, mert túl sokat használtuk a commandot. Várj egy kicsit.');
+                    interaction.editReply('The command was used too often and Reddit detected it as spam. Please wait for a bit and try again.');
                     return;
 
                 case 404:
-                    msg.reply('Nincs ilyen subreddit.');
+                    interaction.editReply(`r/${subreddit} doesn't exist.`);
                     return;
             }
 

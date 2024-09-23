@@ -4,24 +4,32 @@ const Utils = require('../classes/Utils');
 const DuckDuckGo = require('duckduckgo-images-api');
 
 module.exports = class ImgCommand extends Command {
-    constructor() {
-        super({
-            name: 'img',
-            description: 'Grab a random image from DuckDuckGo.',
-            paramsRequired: 1,
-            example: '!img <keywords>',
-        })
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('img')
+        .setDescription('Show a random image from the internet.')
+        .addStringOption(option => 
+            option
+                .setName('keyword')
+                .setDescription('The keyword you want to search for.')
+                .setRequired(true)
+        );
 
-    async run(msg) {
-        let keyword = this.getParamString(msg);
-        let images = await DuckDuckGo.image_search({query: keyword});
+    async execute(interaction) {
+        await interaction.deferReply();
+
+        let keyword = interaction.options.getString('keyword');
+        let images = await DuckDuckGo.image_search({ query: keyword });
 
         if (images.length === 0) {
-            msg.reply(`No images found with keyword: "${keyword}"`);
+            interaction.Reply(`No images found with keyword: \`${keyword}\``);
             return;
         }
 
-        msg.reply({ content: `Image keyword: "${keyword}"`, files: [new Discord.AttachmentBuilder(Utils.randArr(images.slice(0, 10)).image)] });
+        let image = Utils.randArr(images.slice(0, 10));
+
+        interaction.editReply({
+            content: `Image keyword: \`${keyword}\``,
+            files: [new Discord.AttachmentBuilder(image.image)],
+        });
     }
 };

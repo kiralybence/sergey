@@ -1,31 +1,32 @@
 const Command = require('./Command');
 const Imitator = require('../classes/Imitator');
-const Formatter = require('../classes/Formatter');
+const Discord = require('discord.js');
 
 module.exports = class ImitateCommand extends Command {
-    constructor() {
-        super({
-            name: 'imitate',
-            description: 'Imitate someone\'s writing style.',
-            paramsRequired: 1,
-            example: '!imitate <tagged-user> <days?>',
-        });
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('imitate')
+        .setDescription('Imitate someone\'s writing style.')
+        .addUserOption(option => 
+            option
+                .setName('user')
+                .setDescription('The user you want to imitate.')
+                .setRequired(true)
+        )
+        .addIntegerOption(option => 
+            option
+                .setName('days')
+                .setDescription('Set how recent should the messages be that will be used for imitation.')
+        );
 
-    async run(msg) {
-        let params = this.getParamArray(msg);
-        let userTag = params[0];
-        let days = params?.[1];
+    async execute(interaction) {
+        await interaction.deferReply();
 
-        if (!Formatter.isTaggedUser(userTag)) {
-            msg.reply('The user isn\'t tagged. Tag the user with @ and try again.');
-            return;
-        }
+        let user = interaction.options.getUser('user');
+        let days = interaction.options.getInteger('days');
+        let imitator = new Imitator(user.id, days);
+        let text = await imitator.imitate();
+        let name = user.globalName || user.usernam;
 
-        let author_id = Formatter.getIdOfTaggedUser(userTag);
-        let imitator = new Imitator(author_id, days);
-        let fakeText = await imitator.imitate();
-
-        msg.channel.send(`"${fakeText}" - ${userTag}`);
+        interaction.editReply(`"${text}" - ${name}`);
     }
 };

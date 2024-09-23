@@ -3,17 +3,20 @@ const Discord = require('discord.js');
 const Valorant = require('./Valorant');
 const winston = require('winston');
 const Formatter = require('./Formatter');
+const Middleware = require('./Middleware');
+const LogToConsole = require('../middlewares/LogToConsole');
+const FetchWords = require('../middlewares/FetchWords');
+const AutoReact = require('../middlewares/AutoReact');
+const HandleCommand = require('../middlewares/HandleCommand');
 require('winston-daily-rotate-file');
 
 module.exports = class Sergey {
     static commands = [];
-    static middlewares = [];
     static client = null;
     static logger = null;
 
     static init() {
         this.registerCommands();
-        this.registerMiddlewares();
         this.registerLogger();
         this.registerClient();
 
@@ -22,32 +25,27 @@ module.exports = class Sergey {
 
     static registerCommands() {
         fs.readdirSync(__dirname + '/../commands')
-            .forEach(command => {
+            .forEach(filename => {
                 // The base command should not be registered
-                if (command === 'Command.js') {
+                if (
+                    filename === 'Command.js'
+                    || filename === 'fetchall.js' // temp
+                    || filename === 'valorant.js' // temp
+                ) {
                     return;
                 }
 
-                // Convert command names into command instances
-                command = new (require('../commands/' + command));
+                // Convert filenames into command instances
+                let command = new (require('../commands/' + filename))();
 
                 Sergey.commands.push(command);
             });
-    }
 
-    static registerMiddlewares() {
-        fs.readdirSync(__dirname + '/../middlewares')
-            .forEach(middleware => {
-                // The base middleware should not be registered
-                if (middleware === 'Middleware.js') {
-                    return;
-                }
+        const discordApi = new Discord.REST().setToken(process.env.TOKEN);
 
-                // Convert middleware names into middleware instances
-                middleware = new (require('../middlewares/' + middleware));
-
-                Sergey.middlewares.push(middleware);
-            });
+        discordApi.put(Discord.Routes.applicationCommands(process.env.CLIENT_ID), {
+            body: this.commands.map(command => command.command),
+        });
     }
 
     static registerClient() {
@@ -61,17 +59,34 @@ module.exports = class Sergey {
             ],
         });
 
-        Sergey.client.on('ready', () => {
+        Sergey.client.on(Discord.Events.ClientReady, () => {
             console.log(`Connected as ${Sergey.client.user.tag}`);
         });
 
-        Sergey.client.on('messageCreate', async msg => {
+        Sergey.client.on(Discord.Events.MessageCreate, async message => {
             try {
-                for (const middleware of Sergey.middlewares) {
-                    if (middleware.shouldRun(msg)) {
-                        await middleware.run(msg);
-                    }
-                }
+                await Middleware.call(message, [
+                    new LogToConsole(),
+                    new FetchWords(),
+                    new AutoReact(),
+                ]);
+            } catch (err) {
+                console.error(err);
+                
+                Sergey.logger.log({
+                    level: 'error',
+                    message: err.stack || err.message || err,
+                });
+            }
+        });
+
+        Sergey.client.on(Discord.Events.InteractionCreate, async interaction => {
+            if (!interaction.isChatInputCommand()) return;
+
+            try {
+                await Middleware.call(interaction, [
+                    new HandleCommand(),
+                ]);
             } catch (err) {
                 console.error(err);
                 

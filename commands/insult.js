@@ -1,28 +1,24 @@
 const Command = require('./Command');
-const Formatter = require('../classes/Formatter');
 const DB = require('../classes/DB');
-const Utils = require('../classes/Utils');
+const Discord = require('discord.js');
 
 module.exports = class InsultCommand extends Command {
-    constructor() {
-        super({
-            name: 'insult',
-            description: 'Insult someone.',
-            paramsRequired: 1,
-            example: '!insult <tagged-user>',
-        });
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('insult')
+        .setDescription('Insult someone.')
+        .addUserOption(option => 
+            option
+                .setName('user')
+                .setDescription('The user you want to insult.')
+                .setRequired(true)
+        );
 
-    async run(msg) {
-        const userTag = this.getParamArray(msg)[0];
+    async execute(interaction) {
+        await interaction.deferReply();
 
-        if (!Formatter.isTaggedUser(userTag)) {
-            msg.reply('The user isn\'t tagged. Tag the user with @ and try again.');
-            return;
-        }
+        let user = interaction.options.getUser('user');
+        let insult = (await DB.query('select * from insults order by rand() limit 1'))[0];
 
-        let insults = await DB.query('select * from insults');
-
-        msg.channel.send(`${userTag} ${Utils.randArr(insults).message}`);
+        interaction.editReply(`${user} ${insult.message}`);
     }
 };

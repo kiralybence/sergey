@@ -1,9 +1,9 @@
 module.exports = class Middleware {
-    shouldRun(msg) {
-        return !msg.author.bot;
+    shouldRun(message) {
+        return true;
     }
 
-    async run(msg) {
+    async run(message) {
         throw 'No run action specified.';
     }
 }

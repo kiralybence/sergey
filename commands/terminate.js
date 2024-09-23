@@ -1,18 +1,33 @@
 const Command = require('./Command');
 const Formatter = require('../classes/Formatter');
+const Sergey = require('../classes/Sergey');
+const Discord = require('discord.js');
 
 module.exports = class TerminateCommand extends Command {
-    constructor() {
-        super({
-            name: 'terminate',
-            description: 'Terminates the bot.',
-            ownerOnly: true,
-        });
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('terminate')
+        .setDescription('Terminates the bot.');
 
-    async run(msg) {
-        const timestamp = Formatter.formatTimestamp(new Date());
-        console.log(`[${timestamp}] Terminated by !${this.name} command.`);
+    async execute(interaction) {
+        await interaction.deferReply();
+
+        if (!this.isRequestedByOwner(interaction)) {
+            interaction.editReply('This command can only be used by the bot\'s owner.');
+            return;
+        }
+
+        await interaction.editReply('Terminating the bot...');
+
+        let timestamp = Formatter.formatTimestamp(new Date());
+        let logMessage = `Terminated by /${this.command.name} command.`;
+
+        console.log(`[${timestamp}] ${logMessage}`);
+
+        await Sergey.logger.log({
+            level: 'info',
+            message: logMessage,
+        });
+
         process.exit();
     }
 };
