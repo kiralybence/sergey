@@ -12,7 +12,7 @@ module.exports = class TerminateCommand extends Command {
         await interaction.deferReply();
 
         if (!this.isRequestedByOwner(interaction)) {
-            interaction.editReply('This command can only be used by the bot\'s owner.');
+            interaction.editReply({ content: 'This command can only be used by the bot\'s owner.', ephemeral: true });
             return;
         }
 

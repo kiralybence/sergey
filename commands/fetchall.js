@@ -1,43 +1,30 @@
 const Command = require('./Command');
-const Log = require('../classes/Log');
+const MessageFetcher = require('../classes/MessageFetcher');
+const Discord = require('discord.js');
+const DB = require('../classes/DB');
 
 module.exports = class FetchallCommand extends Command {
-    constructor() {
-        super({
-            name: 'fetchall',
-            description: 'Export and store all messages from the channel.',
-            ownerOnly: true,
-        });
-    }
+    command = new Discord.SlashCommandBuilder()
+        .setName('fetchall')
+        .setDescription('Export and store all messages from the channel.');
 
-    async run(msg) {
-        console.time('!fetchall');
-        console.log('Fetching all messages in: ' + msg.channel.name);
+    async execute(interaction) {
+        await interaction.deferReply({ ephemeral: true });
 
-        let lastID;
-        while (true) {
-            const fetchedMessages = await msg.channel.messages.fetch({
-                limit: 100,
-                ...(lastID && { before: lastID }),
-            });
-
-            // Add new
-            fetchedMessages.forEach(message => {
-                if (message.author.bot) {
-                    return;
-                }
-
-                Log.database(message);
-            })
-
-            // If there are no more messages left
-            if (fetchedMessages.size === 0) {
-                console.log('Done fetching messages in: ' + msg.channel.name);
-                console.timeEnd('!fetchall');
-                return;
-            }
-
-            lastID = fetchedMessages.lastKey();
+        if (!this.isRequestedByOwner(interaction)) {
+            interaction.editReply({ content: 'This command can only be used by the bot\'s owner.', ephemeral: true });
+            return;
         }
+
+        let fetchableChannels = await DB.query('select * from fetchable_channels');
+
+        await interaction.editReply(`Fetching messages in ${fetchableChannels.length} channels...`);
+
+        for (const channel of fetchableChannels) {
+            await interaction.followUp({ content: `Fetching: ${channel.description}`, ephemeral: true });
+            await MessageFetcher.fromChannel(channel.channel_id);
+        }
+
+        await interaction.followUp({ content: 'Fetching messages done.', ephemeral: true });
     }
 };
