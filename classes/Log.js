@@ -1,61 +1,66 @@
-const Discord = require('discord.js');
-const Word = require('./Word');
 const Formatter = require('./Formatter');
-const DB = require('./DB');
+const winston = require('winston');
+require('winston-daily-rotate-file');
 
 module.exports = class Log {
-    /**
-     * Log a message to the database.
-     *
-     * @param msg {Discord.Message}
-     * @return {Promise<void>}
-     */
-    static async database(msg) {
-        // Get new words to be added
-        let newWords = Formatter.removeFormatting(msg.content)
-            .toLowerCase()
-            .split(' ')
-            .map(word => word.trim())
-            .filter(word => new Word({word}).canBeUsedToImitate());
+    static fileLogger;
 
-        // Add new words to existing wordlist
-        for (let i = 0; i < newWords.length; i++) {
-            let prev_id = null;
-
-            // If there is a previous word
-            if (newWords[i - 1]) {
-                // Search for it
-                prev_id = await DB.query(`
-                    select *
-                    from words
-                    where word = ?
-                    order by id desc
-                    limit 1
-                `, [
-                    newWords[i - 1],
-                ]).then(results => results?.[0]?.id);
-            }
-
-            await DB.query('insert into words (word, prev_id, author_id, created_at) values (?, ?, ?, ?)', [
-                String(newWords[i]).substring(0, 255),
-                prev_id,
-                msg.author.id,
-                new Date(msg.createdTimestamp),
-            ]);
-        }
+    static async init() {
+        Log.fileLogger = winston.createLogger({
+            format: winston.format.combine(
+                winston.format.timestamp({
+                    format: Formatter.formatTimestamp,
+                }),
+                winston.format.printf(({ timestamp, level, message }) => {
+                    return `${timestamp} [${level.toUpperCase()}]: ${message}`;
+                }),
+            ),
+            transports: [
+                new winston.transports.DailyRotateFile({
+                    filename: 'logs/%DATE%.log',
+                    datePattern: 'YYYY-MM-DD',
+                }),
+            ],
+        });
     }
 
     /**
-     * Log a message to the console.
+     * Log a text to a log file.
      *
-     * @param msg {Discord.Message}
+     * @param level {string}
+     * @param text {string}
      * @return {void}
      */
-    static console(msg) {
-        let breadcrumbs = msg.channel.type === 'dm'
-            ? ['DM', msg.author.username]
-            : [msg.guild.name, '#' + msg.channel.name, msg.author.username];
+    static file(level, text) {
+        Log.fileLogger.log({
+            level: level,
+            message: text,
+        });
+    }
 
-        console.log(`[${Formatter.formatTimestamp(msg.createdTimestamp)}] ${breadcrumbs.join(' > ')}: ${Formatter.removeFormatting(msg.content)}`);
+    /**
+     * Log an error.
+     *
+     * @param err {Error}
+     * @return {void}
+     */
+    static error(err) {
+        let timestamp = Formatter.formatTimestamp(new Date());
+        let errorMessage = err.stack || err.message || err;
+
+        console.error(`[${timestamp}] ${errorMessage}`);
+        Log.file('error', errorMessage);
+    }
+
+    /**
+     * Log a text to the console.
+     *
+     * @param text {string}
+     * @return {void}
+     */
+    static console(text) {
+        let timestamp = Formatter.formatTimestamp(new Date());
+
+        console.log(`[${timestamp}] ${text}`);
     }
 };

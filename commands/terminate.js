@@ -1,6 +1,6 @@
 const Command = require('./Command');
-const Formatter = require('../classes/Formatter');
 const Sergey = require('../classes/Sergey');
+const Log = require('../classes/Log');
 const Discord = require('discord.js');
 
 module.exports = class TerminateCommand extends Command {
@@ -18,10 +18,9 @@ module.exports = class TerminateCommand extends Command {
 
         await interaction.editReply('Terminating the bot...');
 
-        let timestamp = Formatter.formatTimestamp(new Date());
         let logMessage = `Terminated by /${this.command.name} command.`;
 
-        console.log(`[${timestamp}] ${logMessage}`);
+        Log.console(logMessage);
 
         await Sergey.logger.log({
             level: 'info',

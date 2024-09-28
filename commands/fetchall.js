@@ -2,6 +2,7 @@ const Command = require('./Command');
 const MessageFetcher = require('../classes/MessageFetcher');
 const Discord = require('discord.js');
 const DB = require('../classes/DB');
+const Log = require('../classes/Log');
 const Formatter = require('../classes/Formatter');
 
 module.exports = class FetchallCommand extends Command {
@@ -22,17 +23,10 @@ module.exports = class FetchallCommand extends Command {
         await interaction.editReply(`Fetching messages in ${fetchableChannels.length} channels. Check the console for further info.`);
 
         for (const channel of fetchableChannels) {
-            let timestamp = Formatter.formatTimestamp(new Date());
-            let logMessage = `Fetching: ${channel.description}`;
-
-            console.log(`[${timestamp}] ${logMessage}`);
+            Log.console(`Fetching: ${channel.description}`);
             await MessageFetcher.fromChannel(channel.channel_id);
         }
 
-        // TODO: kéne erre a timestampes console logolásra valami külön függvény
-        let timestamp = Formatter.formatTimestamp(new Date());
-        let logMessage = 'Fetching messages done.';
-
-        console.log(`[${timestamp}] ${logMessage}`);
+        Log.console('Fetching messages done.');
     }
 };

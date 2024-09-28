@@ -2,6 +2,7 @@ const axios = require('axios');
 const Emote = require('./Emote');
 const Sergey = require('./Sergey');
 const DB = require('./DB');
+const Log = require('./Log');
 
 module.exports = class Valorant {
     /**
@@ -17,7 +18,7 @@ module.exports = class Valorant {
                 try {
                     Valorant.refresh(user);
                 } catch (err) {
-                    console.error(err);
+                    Log.error(err);
                 }
             }, 60000);
 
@@ -25,7 +26,7 @@ module.exports = class Valorant {
                 try {
                     Valorant.sendLossNotifications(user);
                 } catch (err) {
-                    console.error(err);
+                    Log.error(err);
                 }
             }, 10000);
         }

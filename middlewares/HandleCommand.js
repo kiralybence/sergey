@@ -8,8 +8,7 @@ module.exports = class HandleCommand extends Middleware {
         const command = Sergey.commands.find(command => command.command.name === interaction.commandName);
 
         if (!command) {
-            console.error(`No command matching ${interaction.commandName} was found.`);
-            return;
+            throw `No command matching ${interaction.commandName} was found.`;
         }
 
         await command.execute(interaction);
