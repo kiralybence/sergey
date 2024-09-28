@@ -50,7 +50,8 @@ module.exports = class MessageFetcher {
                     channel_id,
                     guild_id,
                     created_at
-                ) values (?, ?, ?, ?, ?, ?, ?)`, [
+                ) values (?, ?, ?, ?, ?, ?, ?)
+            `, [
                 String(newWords[i]).substring(0, 255),
                 prev_id,
                 message.author.id,
