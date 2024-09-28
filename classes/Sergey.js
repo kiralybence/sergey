@@ -1,7 +1,5 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const Valorant = require('./Valorant');
-const Formatter = require('./Formatter');
 const Log = require('./Log');
 const MiddlewareHandler = require('./MiddlewareHandler');
 const LogToConsole = require('../middlewares/LogToConsole');
@@ -16,8 +14,6 @@ module.exports = class Sergey {
     static init() {
         this.registerCommands();
         this.registerClient();
-
-        // Valorant.init();
     }
 
     static registerCommands() {
