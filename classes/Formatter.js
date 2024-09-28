@@ -17,33 +17,6 @@ module.exports = class Formatter {
         return result?.[0];
     }
 
-    /**
-     * Return the user ID of a tagged user.
-     *
-     * @param {string} user Tagged user
-     * @return {string|null} The tagged user's ID
-     */
-    static getIdOfTaggedUser(user) {
-        if (!this.isTaggedUser(user)) {
-            return null;
-        }
-
-        return user
-            .replace('<@!', '')
-            .replace('<@', '')
-            .replace('>', '');
-    }
-
-    /**
-     * Return if a string is a tagged user.
-     *
-     * @param {string} taggedUser
-     * @return {boolean}
-     */
-    static isTaggedUser(taggedUser) {
-        return taggedUser.startsWith('<@');
-    }
-
     static removeAccents(str) {
         return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
     }
