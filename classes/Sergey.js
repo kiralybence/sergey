@@ -5,6 +5,7 @@ const MiddlewareHandler = require('./MiddlewareHandler');
 const LogToConsole = require('../middlewares/LogToConsole');
 const FetchWords = require('../middlewares/FetchWords');
 const AutoReact = require('../middlewares/AutoReact');
+const AutoReply = require('../middlewares/AutoReply');
 const HandleCommand = require('../middlewares/HandleCommand');
 
 module.exports = class Sergey {
@@ -62,6 +63,7 @@ module.exports = class Sergey {
                     new LogToConsole(),
                     new FetchWords(),
                     new AutoReact(),
+                    new AutoReply(),
                 ]);
             } catch (err) {
                 Log.error(err);
