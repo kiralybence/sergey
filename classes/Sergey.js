@@ -24,21 +24,22 @@ module.exports = class Sergey {
     }
 
     static registerCommands() {
-        fs.readdirSync(__dirname + '/../commands')
-            .forEach(filename => {
-                // The base command should not be registered
-                if (
-                    filename === 'Command.js'
-                    || filename === 'valorant.js' // temp
-                ) {
-                    return;
-                }
+        let filenames = fs.readdirSync(__dirname + '/../commands');
 
-                // Convert filenames into command instances
-                let command = new (require('../commands/' + filename))();
+        for (const filename of filenames) {
+            // The base command should not be registered
+            if (
+                filename === 'Command.js'
+                || filename === 'valorant.js' // temp
+            ) {
+                continue;
+            }
 
-                Sergey.commands.push(command);
-            });
+            // Convert filenames into command instances
+            let command = new (require('../commands/' + filename))();
+
+            Sergey.commands.push(command);
+        }
 
         const discordApi = new Discord.REST().setToken(process.env.TOKEN);
 

@@ -6,13 +6,13 @@ module.exports = class AutoReact extends Middleware {
     async run(message) {
         const autoReactions = await DB.query('select * from auto_reactions');
 
-        autoReactions.forEach(autoReaction => {
+        for (const autoReaction of autoReactions) {
             let normalizedMessage = Formatter.removeAccents(message.content).toLowerCase();
             let normalizedKeyword = Formatter.removeAccents(autoReaction.keyword).toLowerCase();
 
             if (normalizedMessage.includes(normalizedKeyword)) {
                 message.react(autoReaction.emote);
             }
-        });
+        }
     }
 };

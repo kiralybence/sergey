@@ -62,15 +62,15 @@ module.exports = class Formatter {
             '> ', // block quotes
         ];
 
-        formatters.forEach(formatter => {
+        for (const formatter of formatters) {
             str = str.replace(new RegExp('\\' + formatter, 'g'), '');
-        });
+        }
 
-        starterFormatters.forEach(formatter => {
+        for (const formatter of starterFormatters) {
             if (str.startsWith(formatter)) {
                 str = str.substring(formatter.length, str.length);
             }
-        });
+        }
 
         str = str.replace(new RegExp('\\n', 'g'), ' ');
 

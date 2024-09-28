@@ -12,7 +12,7 @@ module.exports = class Valorant {
     static async init() {
         let users = await Valorant.getTrackedUsers();
 
-        users.forEach(user => {
+        for (const user of users) {
             setInterval(() => {
                 try {
                     Valorant.refresh(user);
@@ -28,7 +28,7 @@ module.exports = class Valorant {
                     console.error(err);
                 }
             }, 10000);
-        });
+        }
 
         // TODO: FIX
         console.log(Sergey.commands);
@@ -85,13 +85,13 @@ module.exports = class Valorant {
     static async sendLossNotifications(user) {
         let matches = await this.fetchUntrackedMatches(user);
 
-        matches.forEach(match => {
+        for (const match of matches) {
             this.saveMatch(match, user.id);
 
             if (!match.won) {
                 this.sendLossMessage(match, user);
             }
-        });
+        }
     }
 
     /**

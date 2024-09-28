@@ -32,12 +32,12 @@ module.exports = class ValorantCommand extends Command {
         .then(resp => {
             let message = '';
 
-            resp.recentGames.matches.forEach(match => {
+            for (const match of resp.recentGames.matches) {
                 let time = new Date(match.gameStartDateTime).toLocaleString();
                 let result = match.won ? '🟩 Win' : `🟥 Lose ${Emote.KEKW}`;
 
                 message += `[${time}] ${result} (${match.roundResults}) - ${match.character.name} (${match.kda} KDA)\n`;
-            });
+            }
 
             msg.channel.send(message);
         });
