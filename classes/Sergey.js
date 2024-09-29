@@ -7,6 +7,7 @@ const FetchWords = require('../middlewares/FetchWords');
 const AutoReact = require('../middlewares/AutoReact');
 const AutoReply = require('../middlewares/AutoReply');
 const HandleCommand = require('../middlewares/HandleCommand');
+const LogCommand = require('../middlewares/LogCommand');
 
 module.exports = class Sergey {
     static commands = [];
@@ -76,6 +77,7 @@ module.exports = class Sergey {
             try {
                 await MiddlewareHandler.call(interaction, [
                     new HandleCommand(),
+                    new LogCommand(),
                 ]);
             } catch (err) {
                 Log.error(err);
