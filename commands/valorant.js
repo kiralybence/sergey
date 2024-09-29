@@ -34,7 +34,7 @@ module.exports = class ValorantCommand extends Command {
 
             for (const match of resp.recentGames.matches) {
                 let time = new Date(match.gameStartDateTime).toLocaleString();
-                let result = match.won ? '🟩 Win' : `🟥 Lose ${Emote.KEKW}`;
+                let result = match.won ? '🟩 Win' : `🟥 Lose ${await Emote.get('KEKW')}`;
 
                 message += `[${time}] ${result} (${match.roundResults}) - ${match.character.name} (${match.kda} KDA)\n`;
             }

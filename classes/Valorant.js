@@ -135,7 +135,7 @@ module.exports = class Valorant {
      * @return {string}
      */
     static buildLossMessage(match, user) {
-        return `${user.displayed_name.toUpperCase()} ÚJ LOSE ${Emote.KEKW} (${match.roundResults}) - ${match.character.name} (${match.kda} KDA)\n`;
+        return `${user.displayed_name.toUpperCase()} ÚJ LOSE ${await Emote.get('KEKW')} (${match.roundResults}) - ${match.character.name} (${match.kda} KDA)\n`;
     }
 
     /**
