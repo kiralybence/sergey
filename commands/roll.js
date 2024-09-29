@@ -1,5 +1,6 @@
 const Command = require('./Command');
 const Emote = require('../classes/Emote');
+const DB = require('../classes/DB');
 const Utils = require('../classes/Utils');
 const Discord = require('discord.js');
 
@@ -11,8 +12,8 @@ module.exports = class RollCommand extends Command {
 	async execute(interaction) {
         await interaction.deferReply();
 
-		let userPoints = Utils.rand(1, 100);
-        let botPoints = Utils.rand(1, 100);
+		let botPoints = Utils.rand(1, 100);
+        let userPoints = await this.userPoints(interaction.user.id, botPoints);
         let result;
 
         if (userPoints < botPoints) {
@@ -27,4 +28,32 @@ module.exports = class RollCommand extends Command {
 
         interaction.editReply(`${interaction.user.globalName}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
 	}
+
+    async userPoints(userId, botPoints) {
+        let rigging = (await DB.query('select * from rigged_roll_users where user_id = ? limit 1', [userId]))[0] ?? null;
+
+        if (!rigging) {
+            return Utils.rand(1, 100);
+        }
+
+        switch (rigging.type) {
+            case 'W':
+                return Utils.rand(
+                    botPoints + 1,
+                    Math.max(100, botPoints + 1),
+                );
+            
+            case 'L':
+                return Utils.rand(
+                    Math.min(1, botPoints - 1),
+                    botPoints - 1,
+                );
+
+            case 'D':
+                return botPoints;
+
+            default:
+                throw `Error: Rigging exists, but type wasn\'t recognized (${rigging.type}).`;
+        }
+    }
 };
