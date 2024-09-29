@@ -18,7 +18,7 @@ module.exports = class FetchallCommand extends Command {
             return;
         }
 
-        let fetchableChannels = await DB.query('select * from fetchable_channels');
+        let fetchableChannels = await DB.query('select * from fetchable_channels where is_enabled = 1');
 
         await interaction.editReply(`Fetching messages in ${fetchableChannels.length} channels. Check the console for further info.`);
 

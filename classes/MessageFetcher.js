@@ -104,7 +104,7 @@ module.exports = class MessageFetcher {
      * @return {Promise<boolean>}
      */
     static async isFetchableChannel(channelId) {
-        let results = await DB.query('select 1 from fetchable_channels where channel_id = ? limit 1', [channelId]);
+        let results = await DB.query('select 1 from fetchable_channels where channel_id = ? and is_enabled = 1 limit 1', [channelId]);
 
         return results.length > 0;
     }

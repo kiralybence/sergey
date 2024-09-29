@@ -17,7 +17,7 @@ module.exports = class InsultCommand extends Command {
         await interaction.deferReply();
 
         let user = interaction.options.getUser('user');
-        let insult = (await DB.query('select * from insults order by rand() limit 1'))[0];
+        let insult = (await DB.query('select * from insults where is_enabled = 1 order by rand() limit 1'))[0];
 
         interaction.editReply(`${user} ${insult.message}`);
     }

@@ -6,9 +6,9 @@ module.exports = class AutoReact extends Middleware {
     async shouldRun(message) {
         return !message.author.bot;
     }
-    
+
     async run(message) {
-        const autoReactions = await DB.query('select * from auto_reactions');
+        const autoReactions = await DB.query('select * from auto_reactions where is_enabled = 1');
 
         for (const autoReaction of autoReactions) {
             let normalizedMessage = Formatter.removeAccents(message.content).toLowerCase();

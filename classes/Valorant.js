@@ -41,7 +41,7 @@ module.exports = class Valorant {
      * @return {Promise<Object[]>}
      */
     static getTrackedUsers() {
-        return DB.query('select * from tracked_valorant_users')
+        return DB.query('select * from tracked_valorant_users where is_enabled = 1')
             .then(users => users);
     }
 

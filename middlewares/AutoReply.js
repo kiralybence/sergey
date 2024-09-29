@@ -8,7 +8,7 @@ module.exports = class AutoReply extends Middleware {
     }
 
     async run(message) {
-        const autoReplies = await DB.query('select * from auto_replies');
+        const autoReplies = await DB.query('select * from auto_replies where is_enabled = 1');
 
         for (const autoReply of autoReplies) {
             let normalizedMessage = Formatter.removeAccents(message.content).toLowerCase();
