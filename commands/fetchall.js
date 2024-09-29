@@ -3,7 +3,6 @@ const MessageFetcher = require('../classes/MessageFetcher');
 const Discord = require('discord.js');
 const DB = require('../classes/DB');
 const Log = require('../classes/Log');
-const Formatter = require('../classes/Formatter');
 
 module.exports = class FetchallCommand extends Command {
     command = new Discord.SlashCommandBuilder()
