@@ -23,7 +23,7 @@ module.exports = class RollCommand extends Command {
         } else if (userPoints === botPoints) {
             result = await Emote.get('4Weird');
         } else {
-            result = 'Ennek az üzenetnek soha nem szabadna látszódnia.';
+            result = 'This message should never be visible.';
         }
 
         interaction.editReply(`${interaction.user.globalName}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
