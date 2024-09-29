@@ -1,5 +1,4 @@
 const dayjs = require('dayjs');
-const Discord = require('discord.js');
 const DB = require('./DB');
 
 module.exports = class Word {
