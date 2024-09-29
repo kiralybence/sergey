@@ -29,7 +29,7 @@ module.exports = class ValorantCommand extends Command {
             },
         })
         .then(resp => resp.data)
-        .then(resp => {
+        .then(async resp => {
             let message = '';
 
             for (const match of resp.recentGames.matches) {

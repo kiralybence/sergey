@@ -90,7 +90,7 @@ module.exports = class Valorant {
             this.saveMatch(match, user.id);
 
             if (!match.won) {
-                this.sendLossMessage(match, user);
+                await this.sendLossMessage(match, user);
             }
         }
     }
@@ -134,7 +134,7 @@ module.exports = class Valorant {
      * @param user {Object}
      * @return {string}
      */
-    static buildLossMessage(match, user) {
+    static async buildLossMessage(match, user) {
         return `${user.displayed_name.toUpperCase()} ÚJ LOSE ${await Emote.get('KEKW')} (${match.roundResults}) - ${match.character.name} (${match.kda} KDA)\n`;
     }
 
@@ -144,8 +144,8 @@ module.exports = class Valorant {
      * @param match {Object}
      * @param user {Object}
      */
-    static sendLossMessage(match, user) {
-        let message = this.buildLossMessage(match, user);
+    static async sendLossMessage(match, user) {
+        let message = await this.buildLossMessage(match, user);
 
         Sergey.client.channels.cache.get(process.env.MAIN_CHANNEL_ID).send(message);
         // console.log(message);
