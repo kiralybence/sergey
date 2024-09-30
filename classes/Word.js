@@ -32,6 +32,9 @@ module.exports = class Word {
             select *
             from words
             where author_id = ?
+            and channel_id in (
+                select channel_id from fetchable_channels where is_enabled = 1
+            )
             and created_at >= ?
             and prev_id is null
             group by word
@@ -67,6 +70,9 @@ module.exports = class Word {
                 select id from words where word = ?
             )
             and author_id = ?
+            and channel_id in (
+                select channel_id from fetchable_channels where is_enabled = 1
+            )
             and created_at >= ?
             group by word
             order by count(*) desc
