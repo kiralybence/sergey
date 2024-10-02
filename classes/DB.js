@@ -12,6 +12,7 @@ module.exports = class DB {
         });
 
         DB.query('set names utf8mb4');
+        DB.query(`set sql_mode=(select replace(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))`);
     }
 
     static query(statement, params = null) {

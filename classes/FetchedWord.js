@@ -26,8 +26,6 @@ module.exports = class FetchedWord {
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00';
 
-        await DB.query(`set sql_mode=(select replace(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))`);
-
         return await DB.query(`
             select *
             from fetched_words
@@ -62,8 +60,6 @@ module.exports = class FetchedWord {
                 .tz(process.env.TIMEZONE)
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00'; // anything
-
-        await DB.query(`set sql_mode=(select replace(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))`);
 
         return await DB.query(`
             select *
