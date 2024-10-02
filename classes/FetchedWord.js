@@ -67,11 +67,22 @@ module.exports = class FetchedWord {
             select *
             from fetched_words
             where prev_id in (
-                select id from fetched_words where word = ?
+                select id
+                from fetched_words
+                where word = ?
+                and author_id = ?
+                and channel_id in (
+                    select channel_id
+                    from fetchable_channels
+                    where is_enabled = 1
+                )
+                and created_at >= ?
             )
             and author_id = ?
             and channel_id in (
-                select channel_id from fetchable_channels where is_enabled = 1
+                select channel_id
+                from fetchable_channels
+                where is_enabled = 1
             )
             and created_at >= ?
             group by word
@@ -80,6 +91,8 @@ module.exports = class FetchedWord {
             offset ?
         `, [
             this.word,
+            this.author_id,
+            minDate,
             this.author_id,
             minDate,
             offset,
