@@ -44,7 +44,18 @@ cp .env.example .env
 npm run migrate
 ```
 
+- Fill up the database (optional)
+    - Fill the `auto_reactions` table with your own reactions
+    - Fill the `auto_replies` table with your own replies
+    - Fill the `insults` table with your own insults
+    - Fill the `fetchable_channels` table with Discord channel IDs you want to study user messages from
+    - Fill the `rigged_roll_users` table with your own riggings
+    - Fill the `tracked_lol_users` table with League of Legends players you want to track
+
 - Start the bot
 ```bash
 npm start
 ```
+
+- Run the `/fetchall` command to fetch all user messages (optional)
+    - This might take a while. Fetching 3-4 years of messages from 9 channels took me 30-45 minutes to fetch.
