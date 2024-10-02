@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Word = require('./Word');
+const FetchedWord = require('./FetchedWord');
 const Formatter = require('./Formatter');
 const DB = require('./DB');
 const Utils = require('./Utils');
@@ -21,7 +21,7 @@ module.exports = class MessageFetcher {
             .toLowerCase()
             .split(' ')
             .map(word => word.trim())
-            .filter(word => new Word({word}).canBeUsedToImitate());
+            .filter(word => new FetchedWord({word}).canBeUsedToImitate());
 
         // Add new words to existing wordlist
         for (let i = 0; i < newWords.length; i++) {
@@ -32,7 +32,7 @@ module.exports = class MessageFetcher {
                 // Search for it
                 prev_id = await DB.query(`
                     select *
-                    from words
+                    from fetched_words
                     where word = ?
                     order by id desc
                     limit 1
@@ -42,7 +42,7 @@ module.exports = class MessageFetcher {
             }
 
             await DB.query(`
-                insert into words (
+                insert into fetched_words (
                     word,
                     prev_id,
                     author_id,
@@ -116,7 +116,7 @@ module.exports = class MessageFetcher {
      * @returns {Promise<boolean>}
      */
     static async isAlreadyFethced(messageId) {
-        let results = await DB.query('select 1 from words where message_id = ? limit 1', [messageId]);
+        let results = await DB.query('select 1 from fetched_words where message_id = ? limit 1', [messageId]);
 
         return results.length > 0;
     }

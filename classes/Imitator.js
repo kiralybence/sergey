@@ -1,4 +1,4 @@
-const Word = require('./Word');
+const FetchedWord = require('./FetchedWord');
 
 module.exports = class Imitator {
     /**
@@ -51,7 +51,7 @@ module.exports = class Imitator {
     /**
      * Return the next word to use (from any queues or sources).
      *
-     * @return {Promise<Word>}
+     * @return {Promise<FetchedWord>}
      */
     async getNextWord() {
         return await this.getNextFollowingWord() ?? await this.getNextStarterWord();
@@ -61,13 +61,13 @@ module.exports = class Imitator {
      * Return the next started word.
      * This should only be used if getNextFollowingWord() cannot be used.
      *
-     * @return {Promise<Word|null>}
+     * @return {Promise<FetchedWord|null>}
      */
     async getNextStarterWord() {
         let starterWord = null;
 
         do {
-            starterWord = await Word.getStarterWord(this.author_id, this.starterWordOffset++, this.days);
+            starterWord = await FetchedWord.getStarterWord(this.author_id, this.starterWordOffset++, this.days);
         } while (starterWord !== null && !starterWord.canBeUsedToImitate());
 
         return starterWord;
@@ -75,9 +75,9 @@ module.exports = class Imitator {
 
     /**
      * Return the word that most often follows the current word.
-     * This is a wrapper around Word.getNextFollowingWord(), because we also have to calculate the offset.
+     * This is a wrapper around FetchedWord.getNextFollowingWord(), because we also have to calculate the offset.
      *
-     * @return {Promise<Word|null>}
+     * @return {Promise<FetchedWord|null>}
      */
     async getNextFollowingWord() {
         let followingWord = null;

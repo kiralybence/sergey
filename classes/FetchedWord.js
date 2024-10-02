@@ -1,7 +1,7 @@
 const dayjs = require('dayjs');
 const DB = require('./DB');
 
-module.exports = class Word {
+module.exports = class FetchedWord {
     constructor(props) {
         this.id = props?.id;
         this.word = props?.word;
@@ -16,7 +16,7 @@ module.exports = class Word {
      * @param author_id {String}
      * @param offset {Number}
      * @param days {Number|null}
-     * @return {Promise<Word>}
+     * @return {Promise<FetchedWord>}
      */
     static async getStarterWord(author_id, offset = 0, days = null) {
         const minDate = days
@@ -30,7 +30,7 @@ module.exports = class Word {
 
         return await DB.query(`
             select *
-            from words
+            from fetched_words
             where author_id = ?
             and channel_id in (
                 select channel_id from fetchable_channels where is_enabled = 1
@@ -45,7 +45,7 @@ module.exports = class Word {
             author_id,
             minDate,
             offset,
-        ]).then(results => results.length > 0 ? new Word(results[0]) : null);
+        ]).then(results => results.length > 0 ? new FetchedWord(results[0]) : null);
     }
 
     /**
@@ -53,7 +53,7 @@ module.exports = class Word {
      *
      * @param offset {Number}
      * @param days {Number|null}
-     * @return {Promise<Word>}
+     * @return {Promise<FetchedWord>}
      */
     async getNextFollowingWord(offset = 0, days = null) {
         const minDate = days
@@ -65,9 +65,9 @@ module.exports = class Word {
 
         return await DB.query(`
             select *
-            from words
+            from fetched_words
             where prev_id in (
-                select id from words where word = ?
+                select id from fetched_words where word = ?
             )
             and author_id = ?
             and channel_id in (
@@ -83,7 +83,7 @@ module.exports = class Word {
             this.author_id,
             minDate,
             offset,
-        ]).then(results => results.length > 0 ? new Word(results[0]) : null);
+        ]).then(results => results.length > 0 ? new FetchedWord(results[0]) : null);
     }
 
     /**
