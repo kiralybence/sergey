@@ -24,7 +24,7 @@ Sergey is a Discord bot I've created for experimenting. The bot itself is privat
 
 ### Prerequisites
 
-- Node
+- Node.js
 - MySQL
 
 ### Getting started
