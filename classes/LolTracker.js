@@ -11,12 +11,12 @@ module.exports = class LolTracker {
      * @return {Promise<void>}
      */
     static async init() {
-        let users = await LolTracker.getTrackedUsers();
+        setInterval(async () => {
+            let users = await LolTracker.getTrackedUsers();
 
-        for (let user of users) {
-            let puuid = await LolTracker.getPuuid(user);
+            for (let user of users) {
+                let puuid = await LolTracker.getPuuid(user);
 
-            setInterval(async () => {
                 try {
                     let match = await LolTracker.fetchLatestMatch(user, puuid);
 
@@ -37,8 +37,8 @@ module.exports = class LolTracker {
                 } catch (err) {
                     Log.error(err);
                 }
-            }, 30000);
-        }
+            }
+        }, 30000);
     }
 
     /**
