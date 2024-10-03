@@ -23,10 +23,7 @@ module.exports = class Sergey {
 
         for (const filename of filenames) {
             // The base command should not be registered
-            if (
-                filename === 'Command.js'
-                || filename === 'ValorantCommand.js' // temp
-            ) {
+            if (filename === 'Command.js') {
                 continue;
             }
 
