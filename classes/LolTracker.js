@@ -15,9 +15,13 @@ module.exports = class LolTracker {
             let users = await LolTracker.getTrackedUsers();
 
             for (let user of users) {
-                let puuid = await LolTracker.getPuuid(user);
-
                 try {
+                    let puuid = await LolTracker.getPuuid(user);
+
+                    if (!puuid) {
+                        continue;
+                    }
+
                     let match = await LolTracker.fetchLatestMatch(user, puuid);
 
                     if (!match) {
@@ -31,14 +35,14 @@ module.exports = class LolTracker {
                     await LolTracker.saveMatch(match, user.id);
 
                     // Notifications should only be sent if the match ended recently
-                    if (Date.now() - match.info.gameEndTimestamp < 180000) {
+                    if (Date.now() - match.info.gameEndTimestamp < 300000) {
                         await LolTracker.sendNotifications(match, puuid);
                     }
                 } catch (err) {
                     Log.error(err);
                 }
             }
-        }, 30000);
+        }, 120000);
     }
 
     /**
@@ -66,6 +70,9 @@ module.exports = class LolTracker {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_TOKEN,
             },
+        }).catch(err => {
+            Log.error(err);
+            return null;
         });
 
         let matchId = resp.data[0] ?? null;
@@ -78,6 +85,9 @@ module.exports = class LolTracker {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_TOKEN,
             },
+        }).catch(err => {
+            Log.error(err);
+            return null;
         });
 
         return resp.data;
@@ -165,13 +175,16 @@ module.exports = class LolTracker {
      * Return the Riot PUUID of a user.
      * 
      * @param user {Object}
-     * @return {Promise<string>}
+     * @return {Promise<string|null>}
      */
     static async getPuuid(user) {
         let resp = await axios.get(`https://${user.region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${user.name}/${user.tag}`, {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_TOKEN,
             },
+        }).catch(err => {
+            Log.error(err);
+            return null;
         });
 
         return resp.data.puuid;
