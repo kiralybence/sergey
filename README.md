@@ -47,6 +47,8 @@ npm run migrate
 - Fill up the database (optional)
     - Fill the `auto_reactions` table with your own reactions
     - Fill the `auto_replies` table with your own replies
+    - Fill the `emotes` table with your own emotes
+        - This is for internal functionalities only. Some of the commands use emotes in the replies, and they are fetched from the database (using this format: `<:name:id>`). If the requested emote isn't found in the database, a fallback emoji will be used instead.
     - Fill the `insults` table with your own insults
     - Fill the `fetchable_channels` table with Discord channel IDs you want to study user messages from
     - Fill the `rigged_roll_users` table with your own riggings

@@ -155,7 +155,7 @@ module.exports = class LolTracker {
         let deaths = participant.deaths;
         let assists = participant.assists;
 
-        let message = `${name} just lost a LoL game ${await Emote.get('KEKW')} (${champ} ${kills}/${deaths}/${assists})`;
+        let message = `${name} just lost a LoL game ${await Emote.get('KEKW', '😂')} (${champ} ${kills}/${deaths}/${assists})`;
 
         Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send(message);
     }
@@ -169,7 +169,7 @@ module.exports = class LolTracker {
         let name = participant.riotIdGameName;
         let champ = participant.championName;
 
-        let message = `${name} just did a pentakill with ${champ} ${await Emote.get('PogChimp')}`;
+        let message = `${name} just did a pentakill with ${champ} ${await Emote.get('PogChimp', '😲')}`;
 
         Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send(message);
     }

@@ -17,11 +17,11 @@ module.exports = class RollCommand extends Command {
         let result;
 
         if (userPoints < botPoints) {
-            result = `Winner: Sergey ${await Emote.get('KEKWDISCO')}`;
+            result = `Winner: Sergey ${await Emote.get('KEKWDISCO', '😎')}`;
         } else if (userPoints > botPoints) {
-            result = `Winner: ${interaction.user.globalName} ${await Emote.get('KEKWait')}`;
+            result = `Winner: ${interaction.user.globalName} ${await Emote.get('KEKWait', '😡')}`;
         } else if (userPoints === botPoints) {
-            result = await Emote.get('4Weird');
+            result = await Emote.get('4Weird', '⚖️');
         } else {
             result = 'This message should never be visible.';
         }
