@@ -21,11 +21,11 @@ module.exports = class LolTracker {
                     let match = await LolTracker.fetchLatestMatch(user, puuid);
 
                     if (!match) {
-                        return;
+                        continue;
                     }
 
                     if (await LolTracker.isTrackedMatch(match.metadata.matchId, user.id)) {
-                        return;
+                        continue;
                     }
 
                     await LolTracker.saveMatch(match, user.id);
