@@ -5,6 +5,9 @@ const DB = require('./DB');
 const Log = require('./Log');
 
 module.exports = class LolTracker {
+    static REFRESH_INTERVAL_SECONDS = 120;
+    static RECENT_GAME_THRESHOLD_MINUTES = 5;
+
     /**
      * Initialize League of Legends tracker.
      *
@@ -35,14 +38,14 @@ module.exports = class LolTracker {
                     await LolTracker.saveMatch(match, user.id);
 
                     // Notifications should only be sent if the match ended recently
-                    if (Date.now() - match.info.gameEndTimestamp < 300000) {
+                    if (Date.now() - match.info.gameEndTimestamp < LolTracker.RECENT_GAME_THRESHOLD_MINUTES * 60 * 1000) {
                         await LolTracker.sendNotifications(match, puuid);
                     }
                 } catch (err) {
                     Log.error(err);
                 }
             }
-        }, 120000);
+        }, LolTracker.REFRESH_INTERVAL_SECONDS * 1000);
     }
 
     /**
