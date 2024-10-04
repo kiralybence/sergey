@@ -21,10 +21,10 @@ module.exports = class WordCommand extends Command {
 
         let word = (await DB.query('select * from x_words where word like ? order by rand() limit 1', [
             letter + '%',
-        ]))?.[0];
+        ]))[0];
 
         if (!word) {
-            interaction.editReply(`No words found that start with "${letter}"`);
+            interaction.editReply(`No words found that start with "${letter}".`);
             return;
         }
 

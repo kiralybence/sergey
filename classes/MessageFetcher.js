@@ -38,7 +38,7 @@ module.exports = class MessageFetcher {
                     limit 1
                 `, [
                     newWords[i - 1],
-                ]).then(results => results?.[0]?.id);
+                ]).then(results => results[0]?.id);
             }
 
             await DB.query(`

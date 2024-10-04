@@ -19,6 +19,11 @@ module.exports = class InsultCommand extends Command {
         let user = interaction.options.getUser('user');
         let insult = (await DB.query('select * from insults where is_enabled = 1 order by rand() limit 1'))[0];
 
+        if (!insult) {
+            interaction.editReply('No insults found.');
+            return;
+        }
+
         interaction.editReply(`${user} ${insult.message}`);
     }
 };
