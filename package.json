@@ -10,6 +10,6 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node bot.js"
   }
 }
