@@ -6,7 +6,7 @@ module.exports = class Log {
     static fileLogger;
 
     static async init() {
-        Log.fileLogger = winston.createLogger({
+        this.fileLogger = winston.createLogger({
             format: winston.format.combine(
                 winston.format.timestamp({
                     format: Formatter.formatTimestamp,
@@ -32,7 +32,7 @@ module.exports = class Log {
      * @return {void}
      */
     static file(level, text) {
-        Log.fileLogger.log({
+        this.fileLogger.log({
             level: level,
             message: text,
         });
@@ -49,7 +49,7 @@ module.exports = class Log {
         let errorMessage = err.stack || err.message || err;
 
         console.error(`[${timestamp}] ${errorMessage}`);
-        Log.file('error', errorMessage);
+        this.file('error', errorMessage);
     }
 
     /**

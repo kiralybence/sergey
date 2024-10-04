@@ -15,37 +15,37 @@ module.exports = class LolTracker {
      */
     static async init() {
         setInterval(async () => {
-            let users = await LolTracker.getTrackedUsers();
+            let users = await this.getTrackedUsers();
 
             for (let user of users) {
                 try {
-                    let puuid = await LolTracker.getPuuid(user);
+                    let puuid = await this.getPuuid(user);
 
                     if (!puuid) {
                         continue;
                     }
 
-                    let match = await LolTracker.fetchLatestMatch(user, puuid);
+                    let match = await this.fetchLatestMatch(user, puuid);
 
                     if (!match) {
                         continue;
                     }
 
-                    if (await LolTracker.isTrackedMatch(match.metadata.matchId, user.id)) {
+                    if (await this.isTrackedMatch(match.metadata.matchId, user.id)) {
                         continue;
                     }
 
-                    await LolTracker.saveMatch(match, user.id);
+                    await this.saveMatch(match, user.id);
 
                     // Notifications should only be sent if the match ended recently
-                    if (Date.now() - match.info.gameEndTimestamp < LolTracker.RECENT_GAME_THRESHOLD_MINUTES * 60 * 1000) {
-                        await LolTracker.sendNotifications(match, puuid);
+                    if (Date.now() - match.info.gameEndTimestamp < this.RECENT_GAME_THRESHOLD_MINUTES * 60 * 1000) {
+                        await this.sendNotifications(match, puuid);
                     }
                 } catch (err) {
                     Log.error(err);
                 }
             }
-        }, LolTracker.REFRESH_INTERVAL_SECONDS * 1000);
+        }, this.REFRESH_INTERVAL_SECONDS * 1000);
     }
 
     /**
@@ -135,11 +135,11 @@ module.exports = class LolTracker {
         let participant = match.info.participants.find(participant => participant.puuid === puuid);
 
         if (!participant.win) {
-            await LolTracker.sendLossNotification(participant);
+            await this.sendLossNotification(participant);
         }
 
         if (participant.pentaKills > 0) {
-            await LolTracker.sendPentakillNotification(participant);
+            await this.sendPentakillNotification(participant);
         }
     }
 

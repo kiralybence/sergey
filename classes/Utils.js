@@ -20,7 +20,7 @@ module.exports = class Utils {
             return null;
         }
 
-        return arr[Utils.rand(0, arr.length - 1)];
+        return arr[this.rand(0, arr.length - 1)];
     }
 
     /**

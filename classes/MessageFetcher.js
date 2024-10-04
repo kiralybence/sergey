@@ -12,7 +12,7 @@ module.exports = class MessageFetcher {
      * @return {Promise<void>}
      */
     static async fromMessage(message) {
-        if (await MessageFetcher.isAlreadyFethced(message.id)) {
+        if (await this.isAlreadyFethced(message.id)) {
             return;
         }
 
@@ -85,7 +85,7 @@ module.exports = class MessageFetcher {
                     continue;
                 }
 
-                await MessageFetcher.fromMessage(message);
+                await this.fromMessage(message);
             }
 
             // If there are no more messages left

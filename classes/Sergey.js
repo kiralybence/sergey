@@ -30,7 +30,7 @@ module.exports = class Sergey {
             // Convert filenames into command instances
             let command = new (require('../commands/' + filename))();
 
-            Sergey.commands.push(command);
+            this.commands.push(command);
         }
 
         const discordApi = new Discord.REST().setToken(process.env.TOKEN);
@@ -41,7 +41,7 @@ module.exports = class Sergey {
     }
 
     static registerClient() {
-        Sergey.client = new Discord.Client({
+        this.client = new Discord.Client({
             intents: [
                 Discord.GatewayIntentBits.Guilds,
                 Discord.GatewayIntentBits.GuildMessages,
@@ -51,11 +51,11 @@ module.exports = class Sergey {
             ],
         });
 
-        Sergey.client.on(Discord.Events.ClientReady, () => {
-            Log.console(`Connected as ${Sergey.client.user.tag}`);
+        this.client.on(Discord.Events.ClientReady, () => {
+            Log.console(`Connected as ${this.client.user.tag}`);
         });
 
-        Sergey.client.on(Discord.Events.MessageCreate, async message => {
+        this.client.on(Discord.Events.MessageCreate, async message => {
             try {
                 await MiddlewareHandler.call(message, [
                     new LogToConsole(),
@@ -68,7 +68,7 @@ module.exports = class Sergey {
             }
         });
 
-        Sergey.client.on(Discord.Events.InteractionCreate, async interaction => {
+        this.client.on(Discord.Events.InteractionCreate, async interaction => {
             if (!interaction.isChatInputCommand()) return;
 
             try {
@@ -81,6 +81,6 @@ module.exports = class Sergey {
             }
         });
 
-        Sergey.client.login(process.env.TOKEN);
+        this.client.login(process.env.TOKEN);
     }
 };
