@@ -75,10 +75,9 @@ module.exports = class LolTracker {
             },
         }).catch(err => {
             Log.error(err);
-            return null;
         });
 
-        let matchId = resp.data[0] ?? null;
+        let matchId = resp?.data?.[0] ?? null;
 
         if (!matchId) {
             return null;
@@ -90,10 +89,9 @@ module.exports = class LolTracker {
             },
         }).catch(err => {
             Log.error(err);
-            return null;
         });
 
-        return resp.data;
+        return resp?.data ?? null;
     }
 
     /**
@@ -187,9 +185,8 @@ module.exports = class LolTracker {
             },
         }).catch(err => {
             Log.error(err);
-            return null;
         });
 
-        return resp.data.puuid;
+        return resp?.data?.puuid ?? null;
     }
 };
