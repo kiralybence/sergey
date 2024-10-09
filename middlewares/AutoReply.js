@@ -36,7 +36,7 @@ module.exports = class AutoReply extends Middleware {
                 return message.includes(keyword);
             
             default:
-                throw 'Invalid matchMode.';
+                throw 'Invalid match mode.';
         }
     }
 };
