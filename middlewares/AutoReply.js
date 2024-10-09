@@ -1,3 +1,4 @@
+const Discord = require('discord.js');
 const Middleware = require('./Middleware');
 const Formatter = require('../classes/Formatter');
 const DB = require('../classes/DB');
@@ -15,7 +16,10 @@ module.exports = class AutoReply extends Middleware {
             let normalizedKeyword = Formatter.removeAccents(autoReply.keyword).toLowerCase();
 
             if (normalizedMessage.includes(normalizedKeyword)) {
-                message.reply(autoReply.reply);
+                message.reply({
+                    content: autoReply.message,
+                    files: autoReply.embed ? [new Discord.AttachmentBuilder(autoReply.embed)] : null,
+                });
             }
         }
     }
