@@ -15,12 +15,28 @@ module.exports = class AutoReply extends Middleware {
             let normalizedMessage = Formatter.removeAccents(message.content).toLowerCase();
             let normalizedKeyword = Formatter.removeAccents(autoReply.keyword).toLowerCase();
 
-            if (normalizedMessage.includes(normalizedKeyword)) {
+            if (this.shouldReply(normalizedKeyword, normalizedMessage, autoReply.match_mode)) {
                 await message.reply({
                     content: autoReply.message,
                     files: autoReply.embed ? [new Discord.AttachmentBuilder(autoReply.embed)] : null,
                 });
             }
+        }
+    }
+
+    shouldReply(keyword, message, matchMode) {
+        switch (matchMode) {
+            case 'message':
+                return message === keyword;
+
+            case 'word':
+                return message.split().some(word => word === keyword);
+
+            case 'any':
+                return message.includes(keyword);
+            
+            default:
+                throw 'Invalid matchMode.';
         }
     }
 };
