@@ -14,13 +14,13 @@ module.exports = class AutoReact extends Middleware {
             let normalizedMessage = Formatter.removeAccents(message.content).toLowerCase();
             let normalizedKeyword = Formatter.removeAccents(autoReaction.keyword).toLowerCase();
 
-            if (this.shouldReply(normalizedKeyword, normalizedMessage, autoReaction.match_mode)) {
+            if (this.shouldReact(normalizedKeyword, normalizedMessage, autoReaction.match_mode)) {
                 await message.react(autoReaction.emote);
             }
         }
     }
 
-    shouldReply(keyword, message, matchMode) {
+    shouldReact(keyword, message, matchMode) {
         switch (matchMode) {
             case 'message':
                 return message === keyword;
