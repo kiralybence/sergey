@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const Log = require('./Log');
+const MessageScheduler = require('./MessageScheduler');
+const LolTracker = require('./LolTracker');
 const MiddlewareHandler = require('./MiddlewareHandler');
 const LogToConsole = require('../middlewares/LogToConsole');
 const FetchWords = require('../middlewares/FetchWords');
@@ -16,6 +18,11 @@ module.exports = class Sergey {
     static init() {
         this.registerCommands();
         this.registerClient();
+        MessageScheduler.init();
+
+        if (process.env.RIOT_API_TOKEN) {
+            LolTracker.init();
+        }
     }
 
     static registerCommands() {

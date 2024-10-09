@@ -17,6 +17,7 @@ Sergey is a Discord bot I've created for experimenting. The bot itself is privat
 - Track League of Legends players and send a message to the chat whenever they lose
 - Insult someone in the chat with a random insult
 - Roll 1-100 against the bot (with the ability to rig the rolls for certain users)
+- Send scheduled messages
 
 ...and more.
 
@@ -53,6 +54,7 @@ npm run migrate
     - Fill the `fetchable_channels` table with Discord channel IDs you want to study user messages from
     - Fill the `rigged_roll_users` table with your own riggings
     - Fill the `tracked_lol_users` table with League of Legends players you want to track
+    - Fill the `scheduled_messages` table with your own scheduled messages
 
 - Start the bot
 ```bash
