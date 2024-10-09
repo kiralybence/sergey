@@ -16,7 +16,7 @@ module.exports = class AutoReply extends Middleware {
             let normalizedKeyword = Formatter.removeAccents(autoReply.keyword).toLowerCase();
 
             if (normalizedMessage.includes(normalizedKeyword)) {
-                message.reply({
+                await message.reply({
                     content: autoReply.message,
                     files: autoReply.embed ? [new Discord.AttachmentBuilder(autoReply.embed)] : null,
                 });

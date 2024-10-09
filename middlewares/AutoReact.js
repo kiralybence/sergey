@@ -15,7 +15,7 @@ module.exports = class AutoReact extends Middleware {
             let normalizedKeyword = Formatter.removeAccents(autoReaction.keyword).toLowerCase();
 
             if (normalizedMessage.includes(normalizedKeyword)) {
-                message.react(autoReaction.emote);
+                await message.react(autoReaction.emote);
             }
         }
     }
