@@ -50,7 +50,7 @@ module.exports = class LolTracker {
     /**
      * Return users from the database that should be tracked.
      *
-     * @return {Promise<Object[]>}
+     * @return {Promise<object[]>}
      */
     static async getTrackedUsers() {
         return await DB.query('select * from tracked_lol_users where is_enabled = 1');
@@ -59,9 +59,9 @@ module.exports = class LolTracker {
     /**
      * Return the latest match from the user's match history.
      *
-     * @param user {Object}
-     * @param puuid {string}
-     * @return {Promise<Object[]|null>}
+     * @param {object} user
+     * @param {string} puuid
+     * @return {Promise<object[]|null>}
      */
     static async fetchLatestMatch(user, puuid) {
         let resp = await axios.get(`https://${user.region}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids`, {
@@ -96,8 +96,8 @@ module.exports = class LolTracker {
     /**
      * Check if a match was already tracked.
      *
-     * @param matchId {string}
-     * @param userId {Number}
+     * @param {string} matchId
+     * @param {number} userId
      * @return {Promise<boolean>}
      */
     static async isTrackedMatch(matchId, userId) {
@@ -112,8 +112,9 @@ module.exports = class LolTracker {
     /**
      * Save an untracked match to the database.
      *
-     * @param match {Object}
-     * @param userId {Number}
+     * @param {object} match
+     * @param {number} userId
+     * @return {Promise<void>}
      */
     static async saveMatch(match, userId) {
         await DB.query('insert into tracked_lol_matches (match_id, user_id) values (?, ?)', [
@@ -125,8 +126,9 @@ module.exports = class LolTracker {
     /**
      * Send notifications about a match.
      *
-     * @param match {Object}
-     * @param puuid {string}
+     * @param {object} match
+     * @param {string} puuid
+     * @return {Promise<void>}
      */
     static async sendNotifications(match, puuid) {
         let participant = match.info.participants.find(participant => participant.puuid === puuid);
@@ -143,7 +145,8 @@ module.exports = class LolTracker {
     /**
      * Send a loss notification.
      *
-     * @param participant {Object}
+     * @param {Object} participant
+     * @return {Promise<void>}
      */
     static async sendLossNotification(participant) {
         const Sergey = require('./Sergey');
@@ -162,7 +165,8 @@ module.exports = class LolTracker {
     /**
      * Send a pentakill notification.
      *
-     * @param participant {Object}
+     * @param {object} participant
+     * @return {Promise<void>}
      */
     static async sendPentakillNotification(participant) {
         const Sergey = require('./Sergey');
@@ -178,7 +182,7 @@ module.exports = class LolTracker {
     /**
      * Return the Riot PUUID of a user.
      * 
-     * @param user {Object}
+     * @param {object} user
      * @return {Promise<string|null>}
      */
     static async getPuuid(user) {

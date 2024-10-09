@@ -27,8 +27,8 @@ module.exports = class Log {
     /**
      * Log a text to a log file.
      *
-     * @param level {string}
-     * @param text {string}
+     * @param {string} level
+     * @param {string} text
      * @return {void}
      */
     static file(level, text) {
@@ -41,7 +41,7 @@ module.exports = class Log {
     /**
      * Log an error.
      *
-     * @param err {Error}
+     * @param {Error} err
      * @return {void}
      */
     static error(err) {
@@ -55,7 +55,7 @@ module.exports = class Log {
     /**
      * Log a text to the console.
      *
-     * @param text {string}
+     * @param {string} text
      * @return {void}
      */
     static console(text) {

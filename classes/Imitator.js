@@ -2,8 +2,8 @@ const FetchedWord = require('./FetchedWord');
 
 module.exports = class Imitator {
     /**
-     * @param author_id {String}
-     * @param days {Number|null} Limit messages to past X days
+     * @param {string} author_id
+     * @param {number|null} days Limit messages to past X days
      */
     constructor(author_id, days = null) {
         this.maxWords = 100; // hardcoded for now
@@ -17,7 +17,7 @@ module.exports = class Imitator {
     /**
      * Generate a fake text to imitate a certain person.
      *
-     * @return {string}
+     * @return {Promise<string>}
      */
     async imitate() {
         this.selectedWord = await this.getNextStarterWord();
@@ -99,7 +99,7 @@ module.exports = class Imitator {
      * We keep track of how many times we've already used a certain word,
      * so the next time we'll pick a different one to avoid infinitely repeating patterns.
      *
-     * @param string {String}
+     * @param {string} string
      * @return {number}
      */
     getTimesUsedInFakeText(string) {

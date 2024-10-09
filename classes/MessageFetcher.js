@@ -8,7 +8,7 @@ module.exports = class MessageFetcher {
     /**
      * Fetch words from a message and save them in the database.
      *
-     * @param message {Discord.Message}
+     * @param {Discord.Message} message
      * @return {Promise<void>}
      */
     static async fromMessage(message) {
@@ -66,7 +66,7 @@ module.exports = class MessageFetcher {
     /**
      * Fetch words from messages in a channel and save them in the database.
      *
-     * @param channelId {string}
+     * @param {string} channelId
      * @return {Promise<void>}
      */
     static async fromChannel(channelId) {

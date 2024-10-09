@@ -1,19 +1,21 @@
 const Discord = require('discord.js');
 module.exports = class Utils {
     /**
-     * Generate a random number
+     * Generate a random number.
      *
-     * @param min Inclusive
-     * @param max Inclusive
+     * @param {number} min Inclusive
+     * @param {number} max Inclusive
+     * @return {number}
      */
     static rand(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
     /**
-     * Get a random element from an array
+     * Get a random element from an array.
      *
-     * @param arr
+     * @param {Array} arr
+     * @return {*}
      */
     static randArr(arr) {
         if (arr.length === 0) {

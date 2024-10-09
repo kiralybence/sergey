@@ -13,9 +13,9 @@ module.exports = class FetchedWord {
     /**
      * Return the most common word to start a sentence with.
      *
-     * @param author_id {String}
-     * @param offset {Number}
-     * @param days {Number|null}
+     * @param {string} author_id
+     * @param {number} offset
+     * @param {number|null} days
      * @return {Promise<FetchedWord>}
      */
     static async getStarterWord(author_id, offset = 0, days = null) {
@@ -49,8 +49,8 @@ module.exports = class FetchedWord {
     /**
      * Return the word that most often follows the current word.
      *
-     * @param offset {Number}
-     * @param days {Number|null}
+     * @param {number} offset
+     * @param {number|null} days
      * @return {Promise<FetchedWord>}
      */
     async getNextFollowingWord(offset = 0, days = null) {
