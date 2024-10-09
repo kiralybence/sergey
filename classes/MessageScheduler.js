@@ -10,7 +10,7 @@ module.exports = class MessageScheduler {
 
     static async init() {
         setInterval(async () => {
-            let messages = await DB.query('select * from scheduled_messages');
+            let messages = await DB.query('select * from scheduled_messages where is_enabled = 1');
 
             for (let message of messages) {
                 let isRegistered = this.isRegistered(message);
