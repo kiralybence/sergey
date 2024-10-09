@@ -1,12 +1,11 @@
 const axios = require('axios');
 const Emote = require('./Emote');
-const Sergey = require('./Sergey');
 const DB = require('./DB');
 const Log = require('./Log');
 
 module.exports = class LolTracker {
     static REFRESH_INTERVAL_SECONDS = 120;
-    static RECENT_GAME_THRESHOLD_MINUTES = 5;
+    static RECENT_GAME_THRESHOLD_MINUTES = 10;
 
     /**
      * Initialize League of Legends tracker.
@@ -147,6 +146,8 @@ module.exports = class LolTracker {
      * @param participant {Object}
      */
     static async sendLossNotification(participant) {
+        const Sergey = require('./Sergey');
+
         let name = participant.riotIdGameName;
         let champ = participant.championName;
         let kills = participant.kills;
@@ -164,6 +165,8 @@ module.exports = class LolTracker {
      * @param participant {Object}
      */
     static async sendPentakillNotification(participant) {
+        const Sergey = require('./Sergey');
+
         let name = participant.riotIdGameName;
         let champ = participant.championName;
 
