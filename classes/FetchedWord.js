@@ -7,7 +7,7 @@ export default class FetchedWord {
     prev_id;
     author_id;
     created_at;
-    
+
     constructor(obj) {
         this.id = obj.id;
         this.word = obj.word;
@@ -32,7 +32,7 @@ export default class FetchedWord {
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00';
 
-        return await DB.query(`
+        let results = await DB.query(`
             select *
             from fetched_words
             where author_id = ?
@@ -49,7 +49,11 @@ export default class FetchedWord {
             author_id,
             minDate,
             offset,
-        ]).then(results => results.length > 0 ? new FetchedWord(results[0]) : null);
+        ]);
+        
+        return results.length > 0
+            ? new FetchedWord(results[0])
+            : null;
     }
 
     /**
@@ -67,7 +71,7 @@ export default class FetchedWord {
                 .format('YYYY-MM-DD HH:mm:ss')
             : '1970-01-01 00:00:00'; // anything
 
-        return await DB.query(`
+        let results = await DB.query(`
             select *
             from fetched_words
             where prev_id in (
@@ -100,7 +104,11 @@ export default class FetchedWord {
             this.author_id,
             minDate,
             offset,
-        ]).then(results => results.length > 0 ? new FetchedWord(results[0]) : null);
+        ]);
+        
+        return results.length > 0
+            ? new FetchedWord(results[0])
+            : null;
     }
 
     /**

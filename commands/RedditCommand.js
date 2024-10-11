@@ -19,32 +19,12 @@ export default class RedditCommand extends Command {
         await interaction.deferReply();
 
         let subreddit = interaction.options.getString('subreddit');
+        let resp;
 
-        axios.get(`https://www.reddit.com/r/${subreddit}/top.json?t=all`, {
+        resp = await axios.get(`https://www.reddit.com/r/${subreddit}/top.json?t=all`, {
             params: {
                 limit: 100,
             },
-        }).then(resp => {
-            const allowedTypes = ['jpg', 'png', 'webp', 'gif'];
-
-            let posts = resp.data.data.children.filter(post => {
-                // Filter posts that contain media of allowed types
-                return allowedTypes.some(type => post.data.url.endsWith(`.${type}`));
-            });
-
-            if (posts.length === 0) {
-                interaction.editReply(`No posts found in r/${subreddit}.`);
-                return;
-            }
-
-            let randomPost = Utils.randArr(posts);
-            let fileName = Formatter.getFileNameFromUrl(randomPost.data.url);
-
-            if (randomPost.data.over_18) {
-                fileName = `SPOILER_${fileName}`;
-            }
-
-            interaction.editReply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
         }).catch(err => {
             switch (err.response.status) {
                 case 403:
@@ -58,5 +38,26 @@ export default class RedditCommand extends Command {
 
             throw err;
         });
+        
+        const allowedTypes = ['jpg', 'png', 'webp', 'gif'];
+
+        let posts = resp.data.data.children.filter(post => {
+            // Filter posts that contain media of allowed types
+            return allowedTypes.some(type => post.data.url.endsWith(`.${type}`));
+        });
+
+        if (posts.length === 0) {
+            interaction.editReply(`No posts found in r/${subreddit}.`);
+            return;
+        }
+
+        let randomPost = Utils.randArr(posts);
+        let fileName = Formatter.getFileNameFromUrl(randomPost.data.url);
+
+        if (randomPost.data.over_18) {
+            fileName = `SPOILER_${fileName}`;
+        }
+
+        interaction.editReply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
     }
 }
