@@ -1,9 +1,8 @@
-const Command = require('./Command');
-const Sergey = require('../classes/Sergey');
-const Log = require('../classes/Log');
-const Discord = require('discord.js');
+import Command from './Command.js';
+import Log from '../classes/Log.js';
+import * as Discord from 'discord.js';
 
-module.exports = class TerminateCommand extends Command {
+export default class TerminateCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('terminate')
         .setDescription('Terminates the bot.');
@@ -21,12 +20,8 @@ module.exports = class TerminateCommand extends Command {
         let logMessage = `Terminated by /${this.command.name} command.`;
 
         Log.console(logMessage);
-
-        await Sergey.logger.log({
-            level: 'info',
-            message: logMessage,
-        });
+        Log.file('info', logMessage);
 
         process.exit();
     }
-};
+}

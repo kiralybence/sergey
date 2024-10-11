@@ -1,8 +1,8 @@
-const Command = require('./Command');
-const DB = require('../classes/DB');
-const Discord = require('discord.js');
+import Command from './Command.js';
+import DB from '../classes/DB.js';
+import * as Discord from 'discord.js';
 
-module.exports = class InsultCommand extends Command {
+export default class InsultCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('insult')
         .setDescription('Insult someone.')
@@ -26,4 +26,4 @@ module.exports = class InsultCommand extends Command {
 
         interaction.editReply(`${user} ${insult.message}`);
     }
-};
+}

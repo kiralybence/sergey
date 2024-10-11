@@ -1,9 +1,9 @@
-const Discord = require('discord.js');
-const Middleware = require('./Middleware');
-const Formatter = require('../classes/Formatter');
-const DB = require('../classes/DB');
+import * as Discord from 'discord.js';
+import Middleware from './Middleware.js';
+import Formatter from '../classes/Formatter.js';
+import DB from '../classes/DB.js';
 
-module.exports = class AutoReply extends Middleware {
+export default class AutoReply extends Middleware {
     async shouldRun(message) {
         return !message.author.bot;
     }
@@ -39,4 +39,4 @@ module.exports = class AutoReply extends Middleware {
                 throw 'Invalid match mode.';
         }
     }
-};
+}

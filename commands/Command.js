@@ -1,4 +1,4 @@
-module.exports = class Command {
+export default class Command {
     command;
 
     async execute(interaction) {
@@ -8,4 +8,4 @@ module.exports = class Command {
     isRequestedByOwner(interaction) {
         return interaction.user.id === process.env.OWNER_DISCORD_USER_ID;
     }
-};
+}

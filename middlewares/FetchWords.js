@@ -1,7 +1,7 @@
-const Middleware = require('./Middleware');
-const MessageFetcher = require('../classes/MessageFetcher');
+import Middleware from './Middleware.js';
+import MessageFetcher from '../classes/MessageFetcher.js';
 
-module.exports = class FetchWords extends Middleware {
+export default class FetchWords extends Middleware {
     async shouldRun(message) {
         return !message.author.bot && await MessageFetcher.isFetchableChannel(message.channelId);
     }
@@ -9,4 +9,4 @@ module.exports = class FetchWords extends Middleware {
     async run(message) {
         await MessageFetcher.fromMessage(message);
     }
-};
+}

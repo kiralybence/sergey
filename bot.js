@@ -1,9 +1,10 @@
-const Log = require('./classes/Log');
-const DB = require('./classes/DB');
-const Sergey = require('./classes/Sergey');
+import * as dotenv from 'dotenv';
+import Log from './classes/Log.js';
+import DB from './classes/DB.js';
+import Sergey from './classes/Sergey.js';
 
 // Parse .env variables
-require('dotenv').config();
+dotenv.config();
 
 // Initialize the logger
 Log.init();

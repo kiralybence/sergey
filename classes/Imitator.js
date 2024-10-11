@@ -1,6 +1,6 @@
-const FetchedWord = require('./FetchedWord');
+import FetchedWord from './FetchedWord.js';
 
-module.exports = class Imitator {
+export default class Imitator {
     /**
      * @param {string} author_id
      * @param {number|null} days Limit messages to past X days
@@ -114,4 +114,4 @@ module.exports = class Imitator {
     getFormattedFakeText() {
         return this.fakeText.join(' ').substring(0, 1900); // so we don't reach Discord's character limit
     }
-};
+}

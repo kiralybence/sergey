@@ -1,10 +1,8 @@
-const Middleware = require('./Middleware');
+import Middleware from './Middleware.js';
+import Sergey from '../classes/Sergey.js';
 
-module.exports = class HandleCommand extends Middleware {
+export default class HandleCommand extends Middleware {
     async run(interaction) {
-        // TODO: temporary solution
-        const Sergey = require('../classes/Sergey');
-        
         const command = Sergey.commands.find(command => command.command.name === interaction.commandName);
 
         if (!command) {
@@ -13,4 +11,4 @@ module.exports = class HandleCommand extends Middleware {
 
         await command.execute(interaction);
     }
-};
+}

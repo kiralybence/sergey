@@ -1,8 +1,8 @@
-const Middleware = require('./Middleware');
-const Formatter = require('../classes/Formatter');
-const DB = require('../classes/DB');
+import Middleware from './Middleware.js';
+import Formatter from '../classes/Formatter.js';
+import DB from '../classes/DB.js';
 
-module.exports = class AutoReact extends Middleware {
+export default class AutoReact extends Middleware {
     async shouldRun(message) {
         return !message.author.bot;
     }
@@ -35,4 +35,4 @@ module.exports = class AutoReact extends Middleware {
                 throw 'Invalid match mode.';
         }
     }
-};
+}

@@ -1,9 +1,9 @@
-const Middleware = require('./Middleware');
-const Log = require('../classes/Log');
-const Formatter = require('../classes/Formatter');
-const Discord = require('discord.js');
+import Middleware from './Middleware.js';
+import Log from '../classes/Log.js';
+import Formatter from '../classes/Formatter.js';
+import * as Discord from 'discord.js';
 
-module.exports = class LogToConsole extends Middleware {
+export default class LogToConsole extends Middleware {
     async run(message) {
         let breadcrumbs = message.channel.type === Discord.ChannelType.DM
             ? [
@@ -20,4 +20,4 @@ module.exports = class LogToConsole extends Middleware {
 
         Log.console(text);
     }
-};
+}

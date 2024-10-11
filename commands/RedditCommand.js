@@ -1,10 +1,10 @@
-const Command = require('./Command');
-const Discord = require('discord.js');
-const axios = require('axios');
-const Formatter = require('../classes/Formatter');
-const Utils = require('../classes/Utils');
+import Command from './Command.js';
+import * as Discord from 'discord.js';
+import axios from 'axios';
+import Formatter from '../classes/Formatter.js';
+import Utils from '../classes/Utils.js';
 
-module.exports = class RedditCommand extends Command {
+export default class RedditCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('reddit')
         .setDescription('Show a random top post from a Reddit subreddit.')
@@ -59,4 +59,4 @@ module.exports = class RedditCommand extends Command {
             throw err;
         });
     }
-};
+}

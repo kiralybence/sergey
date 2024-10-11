@@ -1,9 +1,9 @@
-const Command = require('./Command');
-const Discord = require('discord.js');
-const Utils = require('../classes/Utils');
-const DuckDuckGo = require('duckduckgo-images-api');
+import Command from './Command.js';
+import * as Discord from 'discord.js';
+import Utils from '../classes/Utils.js';
+import DuckDuckGo from 'duckduckgo-images-api';
 
-module.exports = class ImgCommand extends Command {
+export default class ImgCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('img')
         .setDescription('Show a random image from the internet.')
@@ -32,4 +32,4 @@ module.exports = class ImgCommand extends Command {
             files: [new Discord.AttachmentBuilder(image.image)],
         });
     }
-};
+}

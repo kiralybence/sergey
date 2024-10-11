@@ -1,10 +1,10 @@
-const Discord = require('discord.js');
-const FetchedWord = require('./FetchedWord');
-const Formatter = require('./Formatter');
-const DB = require('./DB');
-const Utils = require('./Utils');
+import * as Discord from 'discord.js';
+import FetchedWord from './FetchedWord.js';
+import Formatter from './Formatter.js';
+import DB from './DB.js';
+import Utils from './Utils.js';
 
-module.exports = class MessageFetcher {
+export default class MessageFetcher {
     /**
      * Fetch words from a message and save them in the database.
      *
@@ -120,4 +120,4 @@ module.exports = class MessageFetcher {
 
         return results.length > 0;
     }
-};
+}

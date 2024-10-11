@@ -1,10 +1,10 @@
-const Command = require('./Command');
-const Emote = require('../classes/Emote');
-const DB = require('../classes/DB');
-const Utils = require('../classes/Utils');
-const Discord = require('discord.js');
+import Command from './Command.js';
+import Emote from '../classes/Emote.js';
+import DB from '../classes/DB.js';
+import Utils from '../classes/Utils.js';
+import * as Discord from 'discord.js';
 
-module.exports = class RollCommand extends Command {
+export default class RollCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('roll')
         .setDescription('Gamble against the bot.')
@@ -64,4 +64,4 @@ module.exports = class RollCommand extends Command {
                 throw `Rigging exists, but type wasn\'t recognized (${rigging.type}).`;
         }
     }
-};
+}

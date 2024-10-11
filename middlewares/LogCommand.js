@@ -1,7 +1,7 @@
-const Middleware = require('./Middleware');
-const DB = require('../classes/DB');
+import Middleware from './Middleware.js';
+import DB from '../classes/DB.js';
 
-module.exports = class LogCommand extends Middleware {
+export default class LogCommand extends Middleware {
     async run(interaction) {
         await DB.query(`
             insert into command_logs (
@@ -35,4 +35,4 @@ module.exports = class LogCommand extends Middleware {
 
         return JSON.stringify(options);
     }
-};
+}

@@ -1,8 +1,8 @@
-const Formatter = require('./Formatter');
-const winston = require('winston');
-require('winston-daily-rotate-file');
+import Formatter from './Formatter.js';
+import winston from 'winston';
+import 'winston-daily-rotate-file';
 
-module.exports = class Log {
+export default class Log {
     static fileLogger;
 
     static async init() {
@@ -63,4 +63,4 @@ module.exports = class Log {
 
         console.log(`[${timestamp}] ${text}`);
     }
-};
+}

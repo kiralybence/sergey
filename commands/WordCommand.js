@@ -1,8 +1,8 @@
-const Command = require('./Command');
-const DB = require('../classes/DB');
-const Discord = require('discord.js');
+import Command from './Command.js';
+import DB from '../classes/DB.js';
+import * as Discord from 'discord.js';
 
-module.exports = class WordCommand extends Command {
+export default class WordCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('word')
         .setDescription('Get a random word starting with a certain letter.')
@@ -30,4 +30,4 @@ module.exports = class WordCommand extends Command {
 
         interaction.editReply(word.word);
     }
-};
+}

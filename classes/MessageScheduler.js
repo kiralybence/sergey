@@ -1,9 +1,10 @@
-const schedule = require('node-schedule');
-const Discord = require('discord.js');
-const DB = require('./DB');
-const Log = require('./Log');
+import schedule from 'node-schedule';
+import * as Discord from 'discord.js';
+import DB from './DB.js';
+import Log from './Log.js';
+import Sergey from './Sergey.js';
 
-module.exports = class MessageScheduler {
+export default class MessageScheduler {
     static REFRESH_INTERVAL_SECONDS = 10;
     static scheduledMessages = {};
     static scheduledJobs = {};
@@ -28,8 +29,6 @@ module.exports = class MessageScheduler {
     }
 
     static scheduleMessage(message) {
-        const Sergey = require('./Sergey');
-
         this.scheduledJobs[message.id] = schedule.scheduleJob(message.cron, () => {
             try {
                 Sergey.client.channels.cache.get(message.channel_id).send({
@@ -56,4 +55,4 @@ module.exports = class MessageScheduler {
         this.scheduledJobs[id].cancel();
         delete this.scheduledJobs[id];
     }
-};
+}

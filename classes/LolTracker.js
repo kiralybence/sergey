@@ -1,9 +1,10 @@
-const axios = require('axios');
-const Emote = require('./Emote');
-const DB = require('./DB');
-const Log = require('./Log');
+import axios from 'axios';
+import Emote from './Emote.js';
+import DB from './DB.js';
+import Log from './Log.js';
+import Sergey from './Sergey.js';
 
-module.exports = class LolTracker {
+export default class LolTracker {
     static REFRESH_INTERVAL_SECONDS = 120;
     static RECENT_GAME_THRESHOLD_MINUTES = 10;
 
@@ -149,8 +150,6 @@ module.exports = class LolTracker {
      * @return {Promise<void>}
      */
     static async sendLossNotification(participant) {
-        const Sergey = require('./Sergey');
-
         let name = participant.riotIdGameName;
         let champ = participant.championName;
         let kills = participant.kills;
@@ -169,8 +168,6 @@ module.exports = class LolTracker {
      * @return {Promise<void>}
      */
     static async sendPentakillNotification(participant) {
-        const Sergey = require('./Sergey');
-
         let name = participant.riotIdGameName;
         let champ = participant.championName;
 
@@ -196,4 +193,4 @@ module.exports = class LolTracker {
 
         return resp?.data?.puuid ?? null;
     }
-};
+}

@@ -1,19 +1,35 @@
-const fs = require('fs');
-const Discord = require('discord.js');
-const Log = require('./Log');
-const MessageScheduler = require('./MessageScheduler');
-const LolTracker = require('./LolTracker');
-const MiddlewareHandler = require('./MiddlewareHandler');
-const LogToConsole = require('../middlewares/LogToConsole');
-const FetchWords = require('../middlewares/FetchWords');
-const AutoReact = require('../middlewares/AutoReact');
-const AutoReply = require('../middlewares/AutoReply');
-const HandleCommand = require('../middlewares/HandleCommand');
-const LogCommand = require('../middlewares/LogCommand');
+import * as Discord from 'discord.js';
+import Log from './Log.js';
+import MessageScheduler from './MessageScheduler.js';
+import LolTracker from './LolTracker.js';
+import MiddlewareHandler from './MiddlewareHandler.js';
+import LogToConsole from '../middlewares/LogToConsole.js';
+import FetchWords from '../middlewares/FetchWords.js';
+import AutoReact from '../middlewares/AutoReact.js';
+import AutoReply from '../middlewares/AutoReply.js';
+import HandleCommand from '../middlewares/HandleCommand.js';
+import LogCommand from '../middlewares/LogCommand.js';
+import FetchallCommand from '../commands/FetchallCommand.js';
+import ImgCommand from '../commands/ImgCommand.js';
+import ImitateCommand from '../commands/ImitateCommand.js';
+import InsultCommand from '../commands/InsultCommand.js';
+import RedditCommand from '../commands/RedditCommand.js';
+import RollCommand from '../commands/RollCommand.js';
+import TerminateCommand from '../commands/TerminateCommand.js';
+import WordCommand from '../commands/WordCommand.js';
 
-module.exports = class Sergey {
-    static commands = [];
+export default class Sergey {
     static client = null;
+    static commands = [
+        new FetchallCommand(),
+        new ImgCommand(),
+        new ImitateCommand(),
+        new InsultCommand(),
+        new RedditCommand(),
+        new RollCommand(),
+        new TerminateCommand(),
+        new WordCommand(),
+    ];
 
     static init() {
         this.registerCommands();
@@ -26,20 +42,6 @@ module.exports = class Sergey {
     }
 
     static registerCommands() {
-        let filenames = fs.readdirSync(__dirname + '/../commands');
-
-        for (const filename of filenames) {
-            // The base command should not be registered
-            if (filename === 'Command.js') {
-                continue;
-            }
-
-            // Convert filenames into command instances
-            let command = new (require('../commands/' + filename))();
-
-            this.commands.push(command);
-        }
-
         const discordApi = new Discord.REST().setToken(process.env.TOKEN);
 
         discordApi.put(Discord.Routes.applicationCommands(process.env.CLIENT_ID), {
@@ -90,4 +92,4 @@ module.exports = class Sergey {
 
         this.client.login(process.env.TOKEN);
     }
-};
+}

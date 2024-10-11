@@ -1,8 +1,8 @@
-const Command = require('./Command');
-const Imitator = require('../classes/Imitator');
-const Discord = require('discord.js');
+import Command from './Command.js';
+import Imitator from '../classes/Imitator.js';
+import * as Discord from 'discord.js';
 
-module.exports = class ImitateCommand extends Command {
+export default class ImitateCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('imitate')
         .setDescription('Imitate someone\'s writing style.')
@@ -29,4 +29,4 @@ module.exports = class ImitateCommand extends Command {
 
         interaction.editReply(`"${text}" - ${name}`);
     }
-};
+}

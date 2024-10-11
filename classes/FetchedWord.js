@@ -1,7 +1,7 @@
-const dayjs = require('dayjs');
-const DB = require('./DB');
+import dayjs from 'dayjs';
+import DB from './DB.js';
 
-module.exports = class FetchedWord {
+export default class FetchedWord {
     constructor(props) {
         this.id = props?.id;
         this.word = props?.word;
@@ -155,4 +155,4 @@ module.exports = class FetchedWord {
     canBeUsedToImitate() {
         return !(this.isEmpty() || this.isUrl() || this.isTag() || this.isCommand());
     }
-};
+}

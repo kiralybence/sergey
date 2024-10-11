@@ -1,10 +1,10 @@
-const Command = require('./Command');
-const MessageFetcher = require('../classes/MessageFetcher');
-const Discord = require('discord.js');
-const DB = require('../classes/DB');
-const Log = require('../classes/Log');
+import Command from './Command.js';
+import MessageFetcher from '../classes/MessageFetcher.js';
+import * as Discord from 'discord.js';
+import DB from '../classes/DB.js';
+import Log from '../classes/Log.js';
 
-module.exports = class FetchallCommand extends Command {
+export default class FetchallCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('fetchall')
         .setDescription('Export and store all messages from the channel.');
@@ -28,4 +28,4 @@ module.exports = class FetchallCommand extends Command {
 
         Log.console('Fetching messages done.');
     }
-};
+}

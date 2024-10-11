@@ -1,5 +1,7 @@
-const Discord = require('discord.js');
-module.exports = class Utils {
+import * as Discord from 'discord.js';
+import Sergey from './Sergey.js';
+
+export default class Utils {
     /**
      * Generate a random number.
      *
@@ -32,9 +34,6 @@ module.exports = class Utils {
      * @return {Discord.Channel|null}
      */
     static getChannel(channelId) {
-        // TODO: temporary solution
-        const Sergey = require('../classes/Sergey');
-
         for (const guild of Sergey.client.guilds.cache.values()) {
             const channel = guild.channels.cache.get(channelId);
     
@@ -45,4 +44,4 @@ module.exports = class Utils {
 
         return null;
     }
-};
+}

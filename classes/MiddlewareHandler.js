@@ -1,4 +1,4 @@
-module.exports = class MiddlewareHandler {
+export default class MiddlewareHandler {
     static async call(target, middlewares) {
         for (const middleware of middlewares) {
             if (await middleware.shouldRun(target)) {
@@ -6,4 +6,4 @@ module.exports = class MiddlewareHandler {
             }
         }
     }
-};
+}

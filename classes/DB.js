@@ -1,6 +1,6 @@
-const mysql = require('mysql2');
+import * as mysql from 'mysql2';
 
-module.exports = class DB {
+export default class DB {
     static connection = null;
 
     static init() {
@@ -24,4 +24,4 @@ module.exports = class DB {
             });
         });
     }
-};
+}

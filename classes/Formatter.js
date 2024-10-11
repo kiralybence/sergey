@@ -1,10 +1,10 @@
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const timezone = require('dayjs/plugin/timezone');
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc.js';
+import timezone from 'dayjs/plugin/timezone.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-module.exports = class Formatter {
+export default class Formatter {
     static formatTimestamp(timestamp) {
         return dayjs(timestamp)
             .tz(process.env.TIMEZONE)
@@ -49,4 +49,4 @@ module.exports = class Formatter {
 
         return str;
     }
-};
+}
