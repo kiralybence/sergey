@@ -4,9 +4,10 @@ export default class Imitator {
     /**
      * @param {string} author_id
      * @param {number|null} days Limit messages to past X days
+     * @param {number} maxWords Limit text length to X words
      */
-    constructor(author_id, days = null) {
-        this.maxWords = 100; // hardcoded for now
+    constructor(author_id, days = null, maxWords = 100) {
+        this.maxWords = maxWords;
         this.author_id = author_id;
         this.days = days;
         this.selectedWord = null;
