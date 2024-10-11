@@ -1,7 +1,7 @@
 import * as mysql from 'mysql2';
 
 export default class DB {
-    static connection = null;
+    static connection;
 
     static init() {
         this.connection = mysql.createConnection({

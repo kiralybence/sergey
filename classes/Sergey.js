@@ -19,7 +19,7 @@ import TerminateCommand from '../commands/TerminateCommand.js';
 import WordCommand from '../commands/WordCommand.js';
 
 export default class Sergey {
-    static client = null;
+    static client;
     static commands = [
         new FetchallCommand(),
         new ImgCommand(),
