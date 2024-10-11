@@ -30,7 +30,7 @@ export default class MessageFetcher {
             // If there is a previous word
             if (newWords[i - 1]) {
                 // Search for it
-                prev_id = await DB.query(`
+                prev_id = (await DB.query(`
                     select *
                     from fetched_words
                     where word = ?
@@ -38,7 +38,7 @@ export default class MessageFetcher {
                     limit 1
                 `, [
                     newWords[i - 1],
-                ])[0]?.id;
+                ]))[0]?.id;
             }
 
             await DB.query(`
