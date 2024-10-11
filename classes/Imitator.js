@@ -1,18 +1,22 @@
 import FetchedWord from './FetchedWord.js';
 
 export default class Imitator {
+    author_id;
+    days = null;
+    maxWords = 100;
+    selectedWord;
+    starterWordOffset = 0;
+    fakeText = [];
+
     /**
      * @param {string} author_id
      * @param {number|null} days Limit messages to past X days
      * @param {number} maxWords Limit text length to X words
      */
     constructor(author_id, days = null, maxWords = 100) {
-        this.maxWords = maxWords;
         this.author_id = author_id;
         this.days = days;
-        this.selectedWord = null;
-        this.starterWordOffset = 0;
-        this.fakeText = [];
+        this.maxWords = maxWords;
     }
 
     /**

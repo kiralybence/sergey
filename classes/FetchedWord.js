@@ -2,12 +2,18 @@ import dayjs from 'dayjs';
 import DB from './DB.js';
 
 export default class FetchedWord {
-    constructor(props) {
-        this.id = props?.id;
-        this.word = props?.word;
-        this.prev_id = props?.prev_id;
-        this.author_id = props?.author_id;
-        this.created_at = props?.created_at;
+    id;
+    word;
+    prev_id;
+    author_id;
+    created_at;
+    
+    constructor(obj) {
+        this.id = obj.id;
+        this.word = obj.word;
+        this.prev_id = obj.prev_id;
+        this.author_id = obj.author_id;
+        this.created_at = obj.created_at;
     }
 
     /**
