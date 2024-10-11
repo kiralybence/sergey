@@ -8,18 +8,18 @@ export default class RollCommand extends Command {
     command = new Discord.SlashCommandBuilder()
         .setName('roll')
         .setDescription('Gamble against the bot.')
-        .addNumberOption(option =>
+        .addIntegerOption(option =>
             option
                 .setName('max')
                 .setDescription('The maximum number to be rolled.')
                 .setMinValue(1)
-                .setMaxValue(Number.MAX_VALUE)
+                .setMaxValue(Number.MAX_SAFE_INTEGER)
         );
 
 	async execute(interaction) {
         await interaction.deferReply();
 
-        let max = interaction.options.getNumber('max') ?? 100;
+        let max = interaction.options.getInteger('max') ?? 100;
 		let botPoints = Utils.rand(1, max);
         let userPoints = await this.userPoints(interaction.user.id, botPoints, max);
         let result;
