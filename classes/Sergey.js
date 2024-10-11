@@ -31,13 +31,13 @@ export default class Sergey {
         new WordCommand(),
     ];
 
-    static init() {
+    static async init() {
         this.registerCommands();
         this.registerClient();
-        MessageScheduler.init();
+        await MessageScheduler.init();
 
         if (process.env.RIOT_API_TOKEN) {
-            LolTracker.init();
+            await LolTracker.init();
         }
     }
 

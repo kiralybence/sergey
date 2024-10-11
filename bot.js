@@ -7,10 +7,10 @@ import Sergey from './classes/Sergey.js';
 dotenv.config();
 
 // Initialize the logger
-Log.init();
+await Log.init();
 
 // Initialize the DB connection
-DB.init();
+await DB.init();
 
 // Start the bot
-Sergey.init();
+await Sergey.init();
