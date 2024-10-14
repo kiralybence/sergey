@@ -11,15 +11,22 @@ export default class LogCommand extends Middleware {
                 channel_id,
                 guild_id,
                 used_at
-            ) values (?, ?, ?, ?, ?, ?)
-        `, [
-            interaction.commandName,
-            this.formatOptions(interaction),
-            interaction.user.id,
-            interaction.channel.id,
-            interaction.guild.id,
-            new Date(interaction.createdTimestamp),
-        ]);
+            ) values (
+                :command,
+                :options,
+                :userId,
+                :channelId,
+                :guildId,
+                :usedAt
+            )
+        `, {
+            command: interaction.commandName,
+            options: this.formatOptions(interaction),
+            userId: interaction.user.id,
+            channelId: interaction.channel.id,
+            guildId: interaction.guild.id,
+            usedAt: new Date(interaction.createdTimestamp),
+        });
     }
 
     formatOptions(interaction) {

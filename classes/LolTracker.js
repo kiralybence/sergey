@@ -102,10 +102,10 @@ export default class LolTracker {
      * @return {Promise<boolean>}
      */
     static async isTrackedMatch(matchId, userId) {
-        let results = await DB.query('select * from tracked_lol_matches where match_id = ? and user_id = ?', [
-            matchId,
-            userId,
-        ]);
+        let results = await DB.query('select * from tracked_lol_matches where match_id = :matchId and user_id = :userId', {
+            matchId: matchId,
+            userId: userId,
+        });
 
         return results.length > 0;
     }
@@ -118,10 +118,10 @@ export default class LolTracker {
      * @return {Promise<void>}
      */
     static async saveMatch(match, userId) {
-        await DB.query('insert into tracked_lol_matches (match_id, user_id) values (?, ?)', [
-            match.metadata.matchId,
-            userId,
-        ]);
+        await DB.query('insert into tracked_lol_matches (match_id, user_id) values (:matchId, :userId)', {
+            matchId: match.metadata.matchId,
+            userId: userId,
+        });
     }
 
     /**

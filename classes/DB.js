@@ -9,6 +9,7 @@ export default class DB {
             user: process.env.DB_USERNAME,
             password: process.env.DB_PASSWORD,
             database: process.env.DB_DATABASE,
+            namedPlaceholders: true,
         });
 
         await this.query('set names utf8mb4');

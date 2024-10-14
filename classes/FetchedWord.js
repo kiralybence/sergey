@@ -35,21 +35,21 @@ export default class FetchedWord {
         let results = await DB.query(`
             select *
             from fetched_words
-            where author_id = ?
+            where author_id = :authorId
             and channel_id in (
                 select channel_id from fetchable_channels where is_enabled = 1
             )
-            and created_at >= ?
+            and created_at >= :minDate
             and prev_id is null
             group by word
             order by count(*) desc
             limit 1
-            offset ?
-        `, [
-            author_id,
-            minDate,
-            offset,
-        ]);
+            offset :offset
+        `, {
+            authorId: author_id,
+            minDate: minDate,
+            offset: offset,
+        });
         
         return results.length > 0
             ? new FetchedWord(results[0])
@@ -77,34 +77,32 @@ export default class FetchedWord {
             where prev_id in (
                 select id
                 from fetched_words
-                where word = ?
-                and author_id = ?
+                where word = :word
+                and author_id = :authorId
                 and channel_id in (
                     select channel_id
                     from fetchable_channels
                     where is_enabled = 1
                 )
-                and created_at >= ?
+                and created_at >= :minDate
             )
-            and author_id = ?
+            and author_id = :authorId
             and channel_id in (
                 select channel_id
                 from fetchable_channels
                 where is_enabled = 1
             )
-            and created_at >= ?
+            and created_at >= :minDate
             group by word
             order by count(*) desc
             limit 1
-            offset ?
-        `, [
-            this.word,
-            this.author_id,
-            minDate,
-            this.author_id,
-            minDate,
-            offset,
-        ]);
+            offset :offset
+        `, {
+            word: this.word,
+            authorId: this.author_id,
+            minDate: minDate,
+            offset: offset,
+        });
         
         return results.length > 0
             ? new FetchedWord(results[0])

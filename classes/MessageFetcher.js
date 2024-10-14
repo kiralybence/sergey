@@ -33,12 +33,10 @@ export default class MessageFetcher {
                 prev_id = (await DB.query(`
                     select *
                     from fetched_words
-                    where word = ?
+                    where word = :word
                     order by id desc
                     limit 1
-                `, [
-                    newWords[i - 1],
-                ]))[0]?.id;
+                `, { word: newWords[i - 1] }))[0]?.id;
             }
 
             await DB.query(`
@@ -50,16 +48,24 @@ export default class MessageFetcher {
                     channel_id,
                     guild_id,
                     created_at
-                ) values (?, ?, ?, ?, ?, ?, ?)
-            `, [
-                String(newWords[i]).substring(0, 255),
-                prev_id,
-                message.author.id,
-                message.id,
-                message.channel.id,
-                message.guild.id,
-                new Date(message.createdTimestamp),
-            ]);
+                ) values (
+                    :word,
+                    :prevId,
+                    :authorId,
+                    :messageId,
+                    :channelId,
+                    :guildId,
+                    :createdAt
+                )
+            `, {
+                word: String(newWords[i]).substring(0, 255),
+                prevId: prev_id,
+                authorId: message.author.id,
+                messageId: message.id,
+                channelId: message.channel.id,
+                guildId: message.guild.id,
+                createdAt: new Date(message.createdTimestamp),
+            });
         }
     }
 
@@ -104,7 +110,7 @@ export default class MessageFetcher {
      * @return {Promise<boolean>}
      */
     static async isFetchableChannel(channelId) {
-        let results = await DB.query('select 1 from fetchable_channels where channel_id = ? and is_enabled = 1 limit 1', [channelId]);
+        let results = await DB.query('select 1 from fetchable_channels where channel_id = :channelId and is_enabled = 1 limit 1', { channelId: channelId });
 
         return results.length > 0;
     }
@@ -116,7 +122,7 @@ export default class MessageFetcher {
      * @returns {Promise<boolean>}
      */
     static async isAlreadyFethced(messageId) {
-        let results = await DB.query('select 1 from fetched_words where message_id = ? limit 1', [messageId]);
+        let results = await DB.query('select 1 from fetched_words where message_id = :messageId limit 1', { messageId: messageId });
 
         return results.length > 0;
     }
