@@ -183,6 +183,10 @@ export default class LolTracker {
      * @return {Promise<string|null>}
      */
     static async getPuuid(user) {
+        if (user.puuid) {
+            return user.puuid;
+        }
+
         let resp = await axios.get(`https://${user.region}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${user.name}/${user.tag}`, {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_TOKEN,
@@ -191,6 +195,17 @@ export default class LolTracker {
             Log.error(err);
         });
 
-        return resp?.data?.puuid ?? null;
+        let puuid = resp?.data?.puuid ?? null;
+
+        if (!puuid) {
+            return null;
+        }
+
+        await DB.query('update tracked_lol_users set puuid = :puuid where id = :id', {
+            puuid: puuid,
+            id: user.id,
+        });
+
+        return puuid;
     }
 }
