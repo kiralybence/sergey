@@ -40,9 +40,9 @@ npm install
 cp .env.example .env
 ```
 
-- Set up the database (TODO)
+- Set up the database
 ```bash
-npm run migrate
+node migrate.js
 ```
 
 - Fill up the database (optional)
@@ -58,8 +58,8 @@ npm run migrate
 
 - Start the bot
 ```bash
-npm start
+node bot.js
 ```
 
 - Run the `/fetchall` command to fetch all user messages (optional)
-    - This might take a while. Fetching 3-4 years of messages from 9 channels took me 30-45 minutes to fetch.
+    - This might take a while. Fetching 1 million words (3-4 years of messages from 9 channels) took me 40-60 minutes to fetch.
