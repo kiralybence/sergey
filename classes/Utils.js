@@ -40,7 +40,7 @@ export default class Utils {
             if (channel) {
                 return channel;
             }
-        };
+        }
 
         return null;
     }
