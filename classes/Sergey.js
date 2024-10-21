@@ -17,6 +17,7 @@ import RedditCommand from '../commands/RedditCommand.js';
 import RollCommand from '../commands/RollCommand.js';
 import TerminateCommand from '../commands/TerminateCommand.js';
 import WordCommand from '../commands/WordCommand.js';
+import WordCountCommand from '../commands/WordCountCommand.js';
 
 export default class Sergey {
     static client;
@@ -29,6 +30,7 @@ export default class Sergey {
         new RollCommand(),
         new TerminateCommand(),
         new WordCommand(),
+        new WordCountCommand(),
     ];
 
     static async init() {
