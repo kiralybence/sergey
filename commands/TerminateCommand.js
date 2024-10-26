@@ -8,10 +8,10 @@ export default class TerminateCommand extends Command {
         .setDescription('Terminates the bot.');
 
     async execute(interaction) {
-        await interaction.deferReply();
+        await interaction.deferReply({ ephemeral: true });
 
         if (!this.isRequestedByOwner(interaction)) {
-            interaction.editReply({ content: 'This command can only be used by the bot\'s owner.', ephemeral: true });
+            interaction.editReply('This command can only be used by the bot\'s owner.');
             return;
         }
 
