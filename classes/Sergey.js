@@ -18,6 +18,7 @@ import RollCommand from '../commands/RollCommand.js';
 import TerminateCommand from '../commands/TerminateCommand.js';
 import WordCommand from '../commands/WordCommand.js';
 import WordCountCommand from '../commands/WordCountCommand.js';
+import WordMostUsedByCommand from '../commands/WordMostUsedByCommand.js';
 
 export default class Sergey {
     static client;
@@ -31,6 +32,7 @@ export default class Sergey {
         new TerminateCommand(),
         new WordCommand(),
         new WordCountCommand(),
+        new WordMostUsedByCommand(),
     ];
 
     static async init() {

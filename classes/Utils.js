@@ -44,4 +44,30 @@ export default class Utils {
 
         return null;
     }
+
+    /**
+     * Get the member instance with the given member ID.
+     * 
+     * @param {string} guildId
+     * @param {string} memberId
+     * @return {Discord.GuildMember|null}
+     */
+    static async getMember(guildId, memberId) {
+        let guild = Sergey.client.guilds.cache.get(guildId);
+
+        if (!guild) {
+            return null;
+        }
+            
+        try {
+            return await guild.members.fetch(memberId);
+        } catch (err) {
+            // "Unknown Member" error, happens if the member is no longer in the server
+            if (err.code === 10007 || err.code === 10013) {
+                return null;
+            } else {
+                throw err;
+            }
+        }
+    }
 }
