@@ -1,8 +1,10 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
+import duration from 'dayjs/plugin/duration.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(duration);
 
 export default class Formatter {
     static formatTimestamp(timestamp) {
@@ -48,5 +50,9 @@ export default class Formatter {
         str = str.replace(new RegExp('\\n', 'g'), ' ');
 
         return str;
+    }
+
+    static formatSeconds(seconds) {
+        return dayjs.duration(seconds, 'seconds').format('mm:ss');
     }
 }

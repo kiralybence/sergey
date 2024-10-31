@@ -16,7 +16,7 @@ Sergey is a Discord bot I've created for experimenting. The bot itself is privat
 - Automatically reply to a message with a specific text if a specific keyword was detected
 - Grab a random image from the internet with the given keywords
 - Grab a random image from the top posts of a Reddit subreddit
-- Track League of Legends players and send a message to the chat whenever they lose
+- Track League of Legends players and send a message to the chat whenever they win/lose
 - Insult someone in the chat with a random insult
 - Roll 1-100 against the bot (with the ability to rig the rolls for certain users)
 - Send scheduled messages

@@ -3,10 +3,15 @@ import Emote from './Emote.js';
 import DB from './DB.js';
 import Log from './Log.js';
 import Sergey from './Sergey.js';
+import * as Discord from 'discord.js';
+import Formatter from './Formatter.js';
 
 export default class LolTracker {
     static REFRESH_INTERVAL_SECONDS = 120;
     static RECENT_GAME_THRESHOLD_MINUTES = 10;
+    
+    // Static data by Riot Games
+    static QUEUES;
 
     /**
      * Initialize League of Legends tracker.
@@ -14,6 +19,8 @@ export default class LolTracker {
      * @return {Promise<void>}
      */
     static async init() {
+        await this.registerStaticData();
+
         setInterval(async () => {
             let users = await this.getTrackedUsers();
 
@@ -134,9 +141,7 @@ export default class LolTracker {
     static async sendNotifications(match, puuid) {
         let participant = match.info.participants.find(participant => participant.puuid === puuid);
 
-        if (!participant.win) {
-            await this.sendLossNotification(participant);
-        }
+        await this.sendMatchNotification(match, participant);
 
         if (participant.pentaKills > 0) {
             await this.sendPentakillNotification(participant);
@@ -144,21 +149,78 @@ export default class LolTracker {
     }
 
     /**
-     * Send a loss notification.
+     * Send a notification about the match.
      *
+     * @param {Object} match
      * @param {Object} participant
      * @return {Promise<void>}
      */
-    static async sendLossNotification(participant) {
-        let name = participant.riotIdGameName;
-        let champ = participant.championName;
-        let kills = participant.kills;
-        let deaths = participant.deaths;
-        let assists = participant.assists;
+    static async sendMatchNotification(match, participant) {
+        let result = participant.win
+            ? 'won'
+            : 'lost';
 
-        let message = `${name} just lost a LoL game ${await Emote.get('KEKW', '😂')} (${champ} ${kills}/${deaths}/${assists})`;
+        let emoji = participant.win
+            ? await Emote.get('PogChimp', '😲')
+            : await Emote.get('KEKW', '😂');
 
-        Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send(message);
+        let color = participant.win
+            ? '00b000'
+            : 'd60000';
+
+        let lane = participant.lane !== 'NONE'
+            ? participant.lane.toLowerCase()
+            : null;
+
+        let queue = this.QUEUES.find(queue => queue.queueId === match.info.queueId);
+
+        Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send({
+            content: `${participant.riotIdGameName} just ${result} a LoL game ${emoji}`,
+            embeds: [
+                new Discord.EmbedBuilder()
+                    .setColor(color)
+                    .setAuthor({
+                        name: participant.championName + (lane ? ` (${lane})` : ''),
+                        iconURL: `https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/champion-icons/${participant.championId}.png`,
+                    })
+                    .addFields(
+                        {
+                            name: 'Gamemode',
+                            value: `${queue?.description.replace(' games', '')} (${queue?.map})`,
+                        },
+                        {
+                            name: 'Length',
+                            value: Formatter.formatSeconds(match.info.gameDuration),
+                            inline: true,
+                        },
+                        {
+                            name: 'KDA',
+                            value: `${participant.kills}/${participant.deaths}/${participant.assists}`,
+                            inline: true,
+                        },
+                        {
+                            name: 'Minions',
+                            value: participant.totalMinionsKilled.toString(),
+                            inline: true,
+                        },
+                        {
+                            name: 'Gold earned',
+                            value: participant.goldEarned.toString(),
+                            inline: true,
+                        },
+                        {
+                            name: 'Damage dealt',
+                            value: participant.totalDamageDealtToChampions.toString(),
+                            inline: true,
+                        },
+                        {
+                            name: 'Minions @ 10 mins',
+                            value: (participant.challenges.laneMinionsFirst10Minutes + participant.challenges.jungleCsBefore10Minutes).toString(),
+                            inline: true,
+                        },
+                    ),
+            ],
+        });
     }
 
     /**
@@ -207,5 +269,17 @@ export default class LolTracker {
         });
 
         return puuid;
+    }
+
+    /**
+     * Fetch static data served by Riot Games.
+     * 
+     * @return {Promise<void>}
+     */
+    static async registerStaticData() {
+        let resp;
+
+        resp = await axios.get('https://static.developer.riotgames.com/docs/lol/queues.json');
+        this.QUEUES = resp.data;
     }
 }
