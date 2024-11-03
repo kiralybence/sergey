@@ -23,6 +23,11 @@ export default class WordMostUsedByCommand extends Command {
             select author_id, count(*) as count
             from fetched_words
             where word = :word
+            and channel_id in (
+                select channel_id
+                from fetchable_channels
+                where is_enabled = 1
+            )
             group by author_id
             order by count desc
         `, {

@@ -22,6 +22,8 @@ export default class LolTracker {
         'NONE': null,
     };
 
+    static matchCache = new Map();
+
     /**
      * Initialize League of Legends tracker.
      *
@@ -61,6 +63,8 @@ export default class LolTracker {
                     Log.error(err);
                 }
             }
+
+            this.matchCache.clear();
         }, this.REFRESH_INTERVAL_SECONDS * 1000);
     }
 
@@ -99,6 +103,10 @@ export default class LolTracker {
             return null;
         }
 
+        if (this.matchCache.has(matchId)) {
+            return this.matchCache.get(matchId);
+        }
+
         resp = await axios.get(`https://${user.region}.api.riotgames.com/lol/match/v5/matches/${matchId}`, {
             headers: {
                 'X-Riot-Token': process.env.RIOT_API_TOKEN,
@@ -107,7 +115,15 @@ export default class LolTracker {
             Log.error(err);
         });
 
-        return resp?.data ?? null;
+        let match = resp?.data ?? null;
+
+        if (!match) {
+            return null;
+        }
+
+        this.matchCache.set(matchId, match);
+
+        return match;
     }
 
     /**
