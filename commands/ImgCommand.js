@@ -21,7 +21,7 @@ export default class ImgCommand extends Command {
         let images = await DuckDuckGo.image_search({ query: keyword });
 
         if (images.length === 0) {
-            interaction.Reply(`No images found with keyword: \`${keyword}\``);
+            interaction.editReply(`No images found with keyword: \`${keyword}\``);
             return;
         }
 

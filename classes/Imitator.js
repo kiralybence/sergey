@@ -56,7 +56,7 @@ export default class Imitator {
     /**
      * Return the next word to use (from any queues or sources).
      *
-     * @return {Promise<FetchedWord>}
+     * @return {Promise<FetchedWord|null>}
      */
     async getNextWord() {
         return await this.getNextFollowingWord() ?? await this.getNextStarterWord();

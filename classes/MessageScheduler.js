@@ -33,7 +33,7 @@ export default class MessageScheduler {
             try {
                 Sergey.client.channels.cache.get(message.channel_id).send({
                     content: message.message,
-                    files: message.embed ? [new Discord.AttachmentBuilder(message.embed)] : null,
+                    files: message.embed ? [new Discord.AttachmentBuilder(message.embed)] : [],
                 });
             } catch (err) {
                 Log.error(err);

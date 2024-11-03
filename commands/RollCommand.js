@@ -16,11 +16,11 @@ export default class RollCommand extends Command {
                 .setMaxValue(Number.MAX_SAFE_INTEGER)
         );
 
-	async execute(interaction) {
+    async execute(interaction) {
         await interaction.deferReply();
 
         let max = interaction.options.getInteger('max') ?? 100;
-		let botPoints = Utils.rand(1, max);
+        let botPoints = Utils.rand(1, max);
         let userPoints = await this.userPoints(interaction.user.id, botPoints, max);
         let result;
 
@@ -35,7 +35,7 @@ export default class RollCommand extends Command {
         }
 
         interaction.editReply(`${interaction.user.globalName}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
-	}
+    }
 
     async userPoints(userId, botPoints, max) {
         let rigging = (await DB.query('select * from rigged_roll_users where user_id = :userId limit 1', { userId: userId }))[0] ?? null;
@@ -61,7 +61,7 @@ export default class RollCommand extends Command {
                 return botPoints;
 
             default:
-                throw `Rigging exists, but type wasn\'t recognized (${rigging.type}).`;
+                throw `Rigging exists, but type wasn't recognized (${rigging.type}).`;
         }
     }
 }

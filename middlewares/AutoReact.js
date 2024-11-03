@@ -26,7 +26,7 @@ export default class AutoReact extends Middleware {
                 return message === keyword;
 
             case 'word':
-                return message.split().some(word => word === keyword);
+                return message.split(' ').some(word => word === keyword);
 
             case 'any':
                 return message.includes(keyword);

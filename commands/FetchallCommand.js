@@ -13,13 +13,13 @@ export default class FetchallCommand extends Command {
         await interaction.deferReply({ ephemeral: true });
 
         if (!this.isRequestedByOwner(interaction)) {
-            interaction.editReply({ content: 'This command can only be used by the bot\'s owner.', ephemeral: true });
+            interaction.editReply('This command can only be used by the bot\'s owner.');
             return;
         }
 
         let fetchableChannels = await DB.query('select * from fetchable_channels where is_enabled = 1');
 
-        await interaction.editReply({ content: `Fetching messages in ${fetchableChannels.length} channels. Check the console for further info.`, ephemeral: true });
+        await interaction.editReply(`Fetching messages in ${fetchableChannels.length} channels. Check the console for further info.`);
 
         for (const channel of fetchableChannels) {
             Log.console(`Fetching: ${channel.description}`);

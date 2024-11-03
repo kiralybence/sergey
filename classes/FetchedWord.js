@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import DB from './DB.js';
+import Formatter from './Formatter.js';
 
 export default class FetchedWord {
     id;
@@ -22,14 +23,11 @@ export default class FetchedWord {
      * @param {string} author_id
      * @param {number} offset
      * @param {number|null} days
-     * @return {Promise<FetchedWord>}
+     * @return {Promise<FetchedWord|null>}
      */
     static async getStarterWord(author_id, offset = 0, days = null) {
         const minDate = days
-            ? dayjs()
-                .subtract(days, 'days')
-                .tz(process.env.TIMEZONE)
-                .format('YYYY-MM-DD HH:mm:ss')
+            ? Formatter.formatTimestamp(dayjs().subtract(days, 'days'))
             : '1970-01-01 00:00:00';
 
         let results = await DB.query(`
