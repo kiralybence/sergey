@@ -61,7 +61,7 @@ export default class RollCommand extends Command {
                 return botPoints;
 
             default:
-                throw `Rigging exists, but type wasn't recognized (${rigging.type}).`;
+                throw new Error(`Rigging exists, but type wasn't recognized (${rigging.type}).`);
         }
     }
 }

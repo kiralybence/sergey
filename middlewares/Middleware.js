@@ -4,6 +4,6 @@ export default class Middleware {
     }
 
     async run(message) {
-        throw 'No run action specified.';
+        throw new Error('No run action specified.');
     }
 }

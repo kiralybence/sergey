@@ -2,7 +2,7 @@ export default class Command {
     command;
 
     async execute(interaction) {
-        throw 'No action specified.';
+        throw new Error('No action specified.');
     }
 
     isRequestedByOwner(interaction) {
