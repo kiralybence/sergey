@@ -74,7 +74,7 @@ CREATE TABLE `insults` (
   KEY `is_enabled` (`is_enabled`)
 );
 
-CREATE TABLE `rigged_roll_users` (
+CREATE TABLE `roll_riggings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,

@@ -54,7 +54,7 @@ node migrate.js
         - This is for internal functionalities only. Some of the commands use emotes in the replies, and they are fetched from the database (using this format: `<:name:id>`). If the requested emote isn't found in the database, a fallback emoji will be used instead.
     - Fill the `insults` table with your own insults
     - Fill the `fetchable_channels` table with Discord channel IDs you want to study user messages from
-    - Fill the `rigged_roll_users` table with your own riggings
+    - Fill the `roll_riggings` table with your own riggings
     - Fill the `tracked_lol_users` table with League of Legends players you want to track
     - Fill the `scheduled_messages` table with your own scheduled messages
 
