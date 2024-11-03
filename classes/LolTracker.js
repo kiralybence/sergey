@@ -13,6 +13,15 @@ export default class LolTracker {
     // Static data by Riot Games
     static QUEUES;
 
+    static ROLES = {
+        'TOP': 'top',
+        'JUNGLE': 'jungle',
+        'MIDDLE': 'mid',
+        'BOTTOM': 'adc',
+        'UTILITY': 'support',
+        'NONE': null,
+    };
+
     /**
      * Initialize League of Legends tracker.
      *
@@ -165,13 +174,10 @@ export default class LolTracker {
             : await Emote.get('KEKW', '😂');
 
         let color = participant.win
-            ? '00b000'
+            ? '00c000'
             : 'd60000';
 
-        let lane = participant.lane !== 'NONE'
-            ? participant.lane.toLowerCase()
-            : null;
-
+        let lane = this.ROLES[participant.teamPosition] ?? null;
         let queue = this.QUEUES.find(queue => queue.queueId === match.info.queueId);
 
         Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send({
@@ -200,7 +206,7 @@ export default class LolTracker {
                         },
                         {
                             name: 'Minions',
-                            value: participant.totalMinionsKilled.toString(),
+                            value: (participant.totalMinionsKilled + participant.neutralMinionsKilled).toString(),
                             inline: true,
                         },
                         {
@@ -215,7 +221,7 @@ export default class LolTracker {
                         },
                         {
                             name: 'Minions @ 10 mins',
-                            value: (participant.challenges.laneMinionsFirst10Minutes + participant.challenges.jungleCsBefore10Minutes).toString(),
+                            value: (participant.challenges.laneMinionsFirst10Minutes + Math.round(participant.challenges.jungleCsBefore10Minutes)).toString(),
                             inline: true,
                         },
                     ),
