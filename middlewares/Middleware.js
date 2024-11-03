@@ -1,9 +1,9 @@
 export default class Middleware {
-    shouldRun(message) {
+    shouldRun(target) {
         return true;
     }
 
-    async run(message) {
+    async run(target) {
         throw new Error('No run action specified.');
     }
 }
