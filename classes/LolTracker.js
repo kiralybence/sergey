@@ -17,7 +17,7 @@ export default class LolTracker {
         'TOP': 'top',
         'JUNGLE': 'jungle',
         'MIDDLE': 'mid',
-        'BOTTOM': 'adc',
+        'BOTTOM': 'marksman',
         'UTILITY': 'support',
         'NONE': null,
     };
