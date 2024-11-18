@@ -42,6 +42,6 @@ export default class WordCountCommand extends Command {
 
         let name = user.globalName || user.username;
 
-        interaction.editReply(`${name} has used the word "${word}" ${count} times.`);
+        await interaction.editReply(`${name} has used the word "${word}" ${count} times.`);
     }
 }

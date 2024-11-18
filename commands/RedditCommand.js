@@ -25,14 +25,14 @@ export default class RedditCommand extends Command {
             params: {
                 limit: 100,
             },
-        }).catch(err => {
+        }).catch(async err => {
             switch (err.response.status) {
                 case 403:
-                    interaction.editReply('The command was used too often and Reddit detected it as spam. Please wait for a bit and try again.');
+                    await interaction.editReply('The command was used too often and Reddit detected it as spam. Please wait for a bit and try again.');
                     return;
 
                 case 404:
-                    interaction.editReply(`r/${subreddit} doesn't exist.`);
+                    await interaction.editReply(`r/${subreddit} doesn't exist.`);
                     return;
             }
 
@@ -47,7 +47,7 @@ export default class RedditCommand extends Command {
         });
 
         if (posts.length === 0) {
-            interaction.editReply(`No posts found in r/${subreddit}.`);
+            await interaction.editReply(`No posts found in r/${subreddit}.`);
             return;
         }
 
@@ -58,6 +58,6 @@ export default class RedditCommand extends Command {
             fileName = `SPOILER_${fileName}`;
         }
 
-        interaction.editReply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
+        await interaction.editReply({ files: [new Discord.AttachmentBuilder(randomPost.data.url, fileName)] });
     }
 }

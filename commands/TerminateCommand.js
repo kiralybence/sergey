@@ -11,7 +11,7 @@ export default class TerminateCommand extends Command {
         await interaction.deferReply({ ephemeral: true });
 
         if (!this.isRequestedByOwner(interaction)) {
-            interaction.editReply('This command can only be used by the bot\'s owner.');
+            await interaction.editReply('This command can only be used by the bot\'s owner.');
             return;
         }
 

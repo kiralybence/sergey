@@ -29,9 +29,9 @@ export default class MessageScheduler {
     }
 
     static scheduleMessage(message) {
-        this.scheduledJobs[message.id] = schedule.scheduleJob(message.cron, () => {
+        this.scheduledJobs[message.id] = schedule.scheduleJob(message.cron, async () => {
             try {
-                Sergey.client.channels.cache.get(message.channel_id).send({
+                await Sergey.client.channels.cache.get(message.channel_id).send({
                     content: message.message,
                     files: message.embed ? [new Discord.AttachmentBuilder(message.embed)] : [],
                 });

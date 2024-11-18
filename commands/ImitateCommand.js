@@ -39,6 +39,6 @@ export default class ImitateCommand extends Command {
         let text = await imitator.imitate();
         let name = user.globalName || user.username;
 
-        interaction.editReply(`"${text}" - ${name}`);
+        await interaction.editReply(`"${text}" - ${name}`);
     }
 }

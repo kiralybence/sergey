@@ -34,7 +34,7 @@ export default class RollCommand extends Command {
             result = 'This message should never be visible.';
         }
 
-        interaction.editReply(`${interaction.user.globalName}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
+        await interaction.editReply(`${interaction.user.globalName}: ${userPoints}\nSergey: ${botPoints}\n\n${result}`);
     }
 
     async userPoints(userId, botPoints, max) {

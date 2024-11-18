@@ -196,7 +196,7 @@ export default class LolTracker {
         let lane = this.ROLES[participant.teamPosition] ?? null;
         let queue = this.QUEUES.find(queue => queue.queueId === match.info.queueId);
 
-        Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send({
+        await Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send({
             content: `${participant.riotIdGameName} just ${result} a LoL game ${emoji}`,
             embeds: [
                 new Discord.EmbedBuilder()
@@ -257,7 +257,7 @@ export default class LolTracker {
 
         let message = `${name} just did a pentakill with ${champ} ${await Emote.get('PogChimp', '😲')}`;
 
-        Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send(message);
+        await Sergey.client.channels.cache.get(process.env.LOL_TRACKER_NOTIFICATION_CHANNEL_ID).send(message);
     }
 
     /**

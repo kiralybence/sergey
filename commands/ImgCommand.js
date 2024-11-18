@@ -21,13 +21,13 @@ export default class ImgCommand extends Command {
         let images = await DuckDuckGo.image_search({ query: keyword });
 
         if (images.length === 0) {
-            interaction.editReply(`No images found with keyword: \`${keyword}\``);
+            await interaction.editReply(`No images found with keyword: \`${keyword}\``);
             return;
         }
 
         let image = Utils.randArr(images.slice(0, 10));
 
-        interaction.editReply({
+        await interaction.editReply({
             content: `Image keyword: \`${keyword}\``,
             files: [new Discord.AttachmentBuilder(image.image)],
         });
