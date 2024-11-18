@@ -35,7 +35,9 @@ export default class FetchedWord {
             from fetched_words
             where author_id = :authorId
             and channel_id in (
-                select channel_id from fetchable_channels where is_enabled = 1
+                select channel_id
+                from fetchable_channels
+                where is_enabled = 1
             )
             and created_at >= :minDate
             and prev_id is null
